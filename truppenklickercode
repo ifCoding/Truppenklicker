@@ -1,0 +1,323 @@
+import java.awt.*;
+import java.awt.event.*;
+import java.awt.event.ActionListener;
+import javax.swing.ImageIcon;
+import javax.swing.*;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.*;
+import java.math.*;
+import java.text.*;
+import javax.swing.JDialog;
+
+public class truppenklicker extends JFrame implements ActionListener{
+
+    int yourScale = 2;
+    int ppsScale = 3;
+
+    double clicksAm = 0;
+    double soldaten = 0;
+    double pps = 0;
+    double offiziere = 0;
+    double g36s = 0;
+    double panzerd = 0;
+    double p3cs = 0;
+
+    JPanel outer;
+    JPanel nested;
+    JPanel nested2;
+    JPanel nested3;
+
+    JPanel personalo;
+    JPanel waffeno;
+    JPanel fahrzeugo;
+    JPanel flugzeugo;
+
+    JLabel clicks;
+    JLabel soldatenlabel;
+    JLabel Preise;
+    JLabel offizierlabel;
+    JLabel G36Clabel;
+    JLabel panzerlabel;
+    JLabel P3Clabel;
+
+    JButton clickerS;
+    JButton Personal;
+    JButton Waffen;
+    JButton Fahrzeuge;
+    JButton Flugzeuge;
+    JButton Marine;
+    JButton Buildings;
+
+    JButton soldatenB;
+    JButton Offizier;
+    JButton G36C;
+    JButton Panzer;
+    JButton P3C;
+
+    public truppenklicker()
+    {
+        super("Truppenklicker");
+        this.setSize(1820, 980);
+        this.setVisible(true);
+        outer = new JPanel(new BorderLayout());
+        nested = new JPanel();
+        nested2 = new JPanel();
+        nested3 = new JPanel();
+        setLocationRelativeTo(null);
+
+        clicks = new JLabel();
+        clicks.setText("$: " + BigDecimal.valueOf(clicksAm).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");
+
+        soldatenlabel = new JLabel();
+        soldatenlabel.setText("Soldaten: " + String.valueOf(soldaten) + "  ");
+
+        Preise = new JLabel();
+        Preise.setText("Preisübersicht: Soldat [30$]   G36C [500$]   Offizier [1.000$]   Panzer [250.000$]   P-3C Orion [2.500.000]   ");
+        
+        G36Clabel = new JLabel();
+        G36Clabel.setText("G36C: " + String.valueOf(g36s) + "  ");
+        
+        offizierlabel = new JLabel();
+        offizierlabel.setText("Offiziere: " + String.valueOf(offiziere) + "  ");
+        
+        panzerlabel = new JLabel();
+        panzerlabel.setText("Panzer: " + String.valueOf(panzerd) + "  ");
+        
+        P3Clabel = new JLabel();
+        P3Clabel.setText("P-3C Orion: " + String.valueOf(p3cs) + "  ");
+
+        clickerS = new JButton("Klick!");
+        clickerS.setPreferredSize(new Dimension(80, 30));
+        Personal = new JButton("Personal");
+        Waffen = new JButton("Waffen");
+        Fahrzeuge = new JButton("Fahrzeuge");
+        Flugzeuge = new JButton("Flugzeuge");
+
+        soldatenB = new JButton("Soldat");
+        soldatenB.setVisible(true);
+        soldatenB.setPreferredSize(new Dimension(80, 30));
+        Offizier = new JButton("Offizier");
+        Offizier.setVisible(true);
+        Offizier.setPreferredSize(new Dimension(80, 30));
+
+        G36C = new JButton("G36C");
+        G36C.setVisible(true);
+        G36C.setPreferredSize(new Dimension(80, 30));
+        
+        Panzer = new JButton("Panzer");
+        Panzer.setVisible(true);
+        Panzer.setPreferredSize(new Dimension(80, 30));
+        
+        P3C = new JButton("P-3C Orion");
+        P3C.setVisible(true);
+        P3C.setPreferredSize(new Dimension(100, 30));
+
+        clickerS.addActionListener(this);
+        Personal.addActionListener(this);
+        soldatenB.addActionListener(this);
+        Offizier.addActionListener(this);
+        Waffen.addActionListener(this);
+        G36C.addActionListener(this);
+        Fahrzeuge.addActionListener(this);
+        Panzer.addActionListener(this);
+        Flugzeuge.addActionListener(this);
+        P3C.addActionListener(this);
+
+        this.add(outer);
+
+        nested.add(clicks);
+        nested.add(soldatenlabel);
+        nested.add(offizierlabel);
+        nested.add(G36Clabel);
+        nested.add(panzerlabel);
+        nested.add(P3Clabel);
+
+        nested2.add(clickerS);
+        nested2.add(Personal);
+        nested2.add(Waffen);
+        nested2.add(Fahrzeuge);
+        nested2.add(Flugzeuge);
+
+        nested3.add(Preise);
+
+        outer.add(nested, BorderLayout.PAGE_START);
+        outer.add(nested2, BorderLayout.CENTER);
+        outer.add(nested3, BorderLayout.PAGE_END);
+        
+
+    }
+
+    public static void main(String[] args) {
+        truppenklicker tl = new truppenklicker();
+        tl.setVisible(true);
+    }
+
+    public void actionPerformed (ActionEvent ae){
+
+        if(ae.getSource() == this.clickerS){
+
+            clicksAm++;
+            clicks.setText("$: " + BigDecimal.valueOf(clicksAm).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");
+        }
+
+        if(ae.getSource() == this.Personal){
+
+            JFrame D = new JFrame();
+            D.setTitle("Personal kaufen");
+            D.setSize(800,600);
+            personalo = new JPanel();
+            D.add(personalo);
+            personalo.add(soldatenB);
+            personalo.add(Offizier);
+            personalo.setVisible(true);
+            D.setVisible(true);
+
+        }
+        if (ae.getSource() == this.soldatenB) {
+            if(clicksAm >= 30) {
+                clicksAm = clicksAm - 30;
+                soldaten = soldaten + 1;
+                soldatenlabel.setText("Soldaten: " + String.valueOf(soldaten) + "  ");
+                pps = pps + 0.025;
+                clicks.setText("$: " + BigDecimal.valueOf(clicksAm).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");
+            } else {
+
+                JDialog error = new JDialog();
+                error.setTitle("Error");
+                error.setSize(180, 80);
+                error.setModal(true);
+                error.add(new JLabel("Nicht genügend Guthaben!"));
+                error.setVisible(true);
+
+            }
+        }
+
+        if (ae.getSource() == this.Offizier) {
+            if (clicksAm >= 1000) {
+                clicksAm = clicksAm - 1000;
+                offiziere = offiziere + 1;
+                offizierlabel.setText("Offiziere: " + String.valueOf(offiziere) + "  ");
+                pps = pps + 0.1;
+                clicks.setText("$: " + BigDecimal.valueOf(clicksAm).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");
+            } else {
+
+                JDialog error = new JDialog();
+                error.setTitle("Error");
+                error.setSize(180, 80);
+                error.setModal(true);
+                error.add(new JLabel("Nicht genügend Guthaben!"));
+                error.setVisible(true);
+
+            }
+        }
+
+        if(ae.getSource() == this.Waffen){
+
+            JFrame C = new JFrame();
+            C.setTitle("Waffen kaufen");
+            C.setSize(800,600);
+            waffeno = new JPanel();
+            C.add(waffeno);
+            waffeno.add(G36C);
+            waffeno.setVisible(true);
+            C.setVisible(true);
+
+        }
+        
+        if (ae.getSource() == this.G36C) {
+            if (clicksAm >= 500) {
+                clicksAm = clicksAm - 500;
+                g36s = g36s + 1;
+                G36Clabel.setText("G36C: " + String.valueOf(g36s) + "  ");
+                pps = pps + 0.085;
+                clicks.setText("$: " + BigDecimal.valueOf(clicksAm).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");
+            } else {
+
+                JDialog error = new JDialog();
+                error.setTitle("Error");
+                error.setSize(180, 80);
+                error.setModal(true);
+                error.add(new JLabel("Nicht genügend Guthaben!"));
+                error.setVisible(true);
+
+            }
+        }
+        
+        if(ae.getSource() == this.Fahrzeuge){
+
+            JFrame B = new JFrame();
+            B.setTitle("Fahrzeuge kaufen");
+            B.setSize(800,600);
+            fahrzeugo = new JPanel();
+            B.add(fahrzeugo);
+            fahrzeugo.add(Panzer);
+            fahrzeugo.setVisible(true);
+            B.setVisible(true);
+
+        }
+        
+        if (ae.getSource() == this.Panzer) {
+            if (clicksAm >= 250000) {
+                clicksAm = clicksAm - 250000;
+                panzerd = panzerd + 1;
+                panzerlabel.setText("Panzer: " + String.valueOf(panzerd) + "  ");
+                pps = pps + 0.135;
+                clicks.setText("$: " + BigDecimal.valueOf(clicksAm).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");
+            } else {
+
+                JDialog error = new JDialog();
+                error.setTitle("Error");
+                error.setSize(180, 80);
+                error.setModal(true);
+                error.add(new JLabel("Nicht genügend Guthaben!"));
+                error.setVisible(true);
+
+            }
+        }
+        
+        if(ae.getSource() == this.Flugzeuge){
+
+            JFrame A = new JFrame();
+            A.setTitle("Flugzeuge kaufen");
+            A.setSize(800,600);
+            flugzeugo = new JPanel();
+            A.add(flugzeugo);
+            flugzeugo.add(P3C);
+            flugzeugo.setVisible(true);
+            A.setVisible(true);
+
+        }
+        
+        if (ae.getSource() == this.P3C) {
+            if (clicksAm >= 2500000) {
+                clicksAm = clicksAm - 2500000;
+                p3cs = p3cs + 1;
+                panzerlabel.setText("P-3C Orion: " + String.valueOf(p3cs) + "  ");
+                pps = pps + 1.795;
+                clicks.setText("$: " + BigDecimal.valueOf(clicksAm).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");
+            } else {
+
+                JDialog error = new JDialog();
+                error.setTitle("Error");
+                error.setSize(180, 80);
+                error.setModal(true);
+                error.add(new JLabel("Nicht genügend Guthaben!"));
+                error.setVisible(true);
+
+            }
+        }
+
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+
+                    clicksAm = clicksAm + pps;
+                    clicks.setText("$: " + BigDecimal.valueOf(clicksAm).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");
+
+                }
+            }, 10000, 12000);
+
+    }
+}
