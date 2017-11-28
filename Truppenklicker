@@ -9,6 +9,10 @@ import java.util.*;
 import java.math.*;
 import java.text.*;
 import javax.swing.JDialog;
+import java.io.*;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class truppenklicker extends JFrame implements ActionListener{
 
@@ -16,6 +20,7 @@ public class truppenklicker extends JFrame implements ActionListener{
     int ppsScale = 3;
 
     double clicksAm = 0;
+    String clicksAm2 = String.valueOf(clicksAm);
     double soldaten = 0;
     double pps = 0;
     double offiziere = 0;
@@ -23,6 +28,8 @@ public class truppenklicker extends JFrame implements ActionListener{
     double panzerd = 0;
     double p3cs = 0;
     double hamburgd = 0;
+    String clicksAm3;
+    String pps2;
 
     JPanel outer;
     JPanel nested;
@@ -51,6 +58,8 @@ public class truppenklicker extends JFrame implements ActionListener{
     JButton Flugzeuge;
     JButton Marine;
     JButton Buildings;
+    JButton Test;
+    JButton Test2;
 
     JButton soldatenB;
     JButton Offizier;
@@ -90,7 +99,7 @@ public class truppenklicker extends JFrame implements ActionListener{
 
         P3Clabel = new JLabel();
         P3Clabel.setText("P-3C Orion: " + String.valueOf(p3cs) + "  ");
-        
+
         hamburglabel = new JLabel();
         hamburglabel.setText("Fregatte H.: " + String.valueOf(hamburgd) + "  ");
 
@@ -101,6 +110,8 @@ public class truppenklicker extends JFrame implements ActionListener{
         Fahrzeuge = new JButton("Fahrzeuge");
         Flugzeuge = new JButton("Flugzeuge");
         Marine = new JButton("Marine");
+        Test = new JButton("Speichern");
+        Test2 = new JButton("Laden");
 
         soldatenB = new JButton("Soldat");
         soldatenB.setVisible(true);
@@ -120,7 +131,7 @@ public class truppenklicker extends JFrame implements ActionListener{
         P3C = new JButton("P-3C Orion");
         P3C.setVisible(true);
         P3C.setPreferredSize(new Dimension(100, 30));
-        
+
         Hamburg = new JButton("Fregatte Hamburg");
         Hamburg.setVisible(true);
         Hamburg.setPreferredSize(new Dimension(140, 30));
@@ -137,6 +148,8 @@ public class truppenklicker extends JFrame implements ActionListener{
         P3C.addActionListener(this);
         Marine.addActionListener(this);
         Hamburg.addActionListener(this);
+        Test.addActionListener(this);
+        Test2.addActionListener(this);
 
         this.add(outer);
 
@@ -154,6 +167,8 @@ public class truppenklicker extends JFrame implements ActionListener{
         nested2.add(Fahrzeuge);
         nested2.add(Flugzeuge);
         nested2.add(Marine);
+        nested2.add(Test);
+        nested2.add(Test2);
 
         nested3.add(Preise);
 
@@ -162,6 +177,7 @@ public class truppenklicker extends JFrame implements ActionListener{
         outer.add(nested3, BorderLayout.PAGE_END);
 
     }
+
     public static void main(String[] args) {
         truppenklicker tl = new truppenklicker();
         tl.setVisible(true);
@@ -321,7 +337,7 @@ public class truppenklicker extends JFrame implements ActionListener{
 
             }
         }
-        
+
         if(ae.getSource() == this.Marine){
 
             JFrame A = new JFrame();
@@ -334,7 +350,7 @@ public class truppenklicker extends JFrame implements ActionListener{
             A.setVisible(true);
 
         }
-        
+
         if (ae.getSource() == this.Hamburg) {
             if (clicksAm >= 3000000) {
                 clicksAm = clicksAm - 3000000;
@@ -350,6 +366,36 @@ public class truppenklicker extends JFrame implements ActionListener{
                 error.setModal(true);
                 error.add(new JLabel("Nicht genügend Guthaben!"));
                 error.setVisible(true);
+
+            }
+        }
+
+        if (ae.getSource() == this.Test) {
+            try {
+                File newTextFile = new File("/savegame.txt");
+
+                BufferedWriter fw = new BufferedWriter(new FileWriter(newTextFile));
+                fw.write(String.valueOf(clicksAm));
+                fw.newLine();
+                fw.write(String.valueOf(pps));
+                fw.newLine();
+                fw.flush();
+                fw.close();
+
+            } catch (IOException iox) {
+                //do stuff with exception
+                iox.printStackTrace();
+            }
+        }
+
+        if (ae.getSource() == this.Test2) {
+            try {
+                String clickAm3 = new String(Files.readAllBytes(Paths.get("/savegame.txt")));
+                String pps2 = new String(Files.readAllBytes(Paths.get("/savegame.txt")));	
+                clicksAm = Double.parseDouble(clicksAm3);
+                pps = Double.parseDouble(pps2);
+                clicks.setText("$: " + BigDecimal.valueOf(clicksAm).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");
+            } catch (Exception exc) {
 
             }
         }
