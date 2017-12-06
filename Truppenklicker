@@ -389,17 +389,9 @@ public class truppenklicker extends JFrame implements ActionListener{
         }
 
         if (ae.getSource() == this.Test2) {
-            try {
-                String clickAm3 = new String(Files.readAllBytes(Paths.get("/savegame.txt")));
-                String pps2 = new String(Files.readAllBytes(Paths.get("/savegame.txt")));	
-                clicksAm = Double.parseDouble(clicksAm3);
-                pps = Double.parseDouble(pps2);
-                clicks.setText("$: " + BigDecimal.valueOf(clicksAm).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");
-            } catch (Exception exc) {
+            ladeDatei();
 
-            }
         }
-
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
                 @Override
@@ -412,4 +404,33 @@ public class truppenklicker extends JFrame implements ActionListener{
             }, 10000, 12000);
 
     }
+
+    private void ladeDatei(String datName) { 
+
+        File file = new File("/savegame"); 
+
+        if (!file.canRead() || !file.isFile()) 
+            System.exit(0); 
+
+        BufferedReader in = null; 
+        try { 
+            in = new BufferedReader(new FileReader("/savegame")); 
+            String zeile = null; 
+            while ((zeile = in.readLine()) != null) { 
+                String clicksAm3 = in.readLine();
+                String pps2 = in.readLine();
+
+                clicksAm = Double.parseDouble(clicksAm3);
+                pps = Double.parseDouble(pps2);
+            } 
+        } catch (IOException e) { 
+            e.printStackTrace(); 
+        } finally { 
+            if (in != null) 
+                try { 
+                    in.close(); 
+                } catch (IOException e) { 
+            } 
+        } 
+    } 
 }
