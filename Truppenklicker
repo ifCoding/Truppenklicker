@@ -13,6 +13,14 @@ import java.io.*;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 public class truppenklicker extends JFrame implements ActionListener{
 
@@ -58,8 +66,8 @@ public class truppenklicker extends JFrame implements ActionListener{
     JButton Flugzeuge;
     JButton Marine;
     JButton Buildings;
-    JButton Test;
-    JButton Test2;
+    JButton speichern;
+    JButton laden;
 
     JButton soldatenB;
     JButton Offizier;
@@ -110,8 +118,8 @@ public class truppenklicker extends JFrame implements ActionListener{
         Fahrzeuge = new JButton("Fahrzeuge");
         Flugzeuge = new JButton("Flugzeuge");
         Marine = new JButton("Marine");
-        Test = new JButton("Speichern");
-        Test2 = new JButton("Laden");
+        speichern = new JButton("Speichern");
+        laden = new JButton("Laden");
 
         soldatenB = new JButton("Soldat");
         soldatenB.setVisible(true);
@@ -148,8 +156,8 @@ public class truppenklicker extends JFrame implements ActionListener{
         P3C.addActionListener(this);
         Marine.addActionListener(this);
         Hamburg.addActionListener(this);
-        Test.addActionListener(this);
-        Test2.addActionListener(this);
+        speichern.addActionListener(this);
+        laden.addActionListener(this);
 
         this.add(outer);
 
@@ -167,8 +175,8 @@ public class truppenklicker extends JFrame implements ActionListener{
         nested2.add(Fahrzeuge);
         nested2.add(Flugzeuge);
         nested2.add(Marine);
-        nested2.add(Test);
-        nested2.add(Test2);
+        nested2.add(speichern);
+        nested2.add(laden);
 
         nested3.add(Preise);
 
@@ -184,9 +192,7 @@ public class truppenklicker extends JFrame implements ActionListener{
     }
 
     public void actionPerformed (ActionEvent ae){
-
         if(ae.getSource() == this.clickerS){
-
             clicksAm++;
             clicks.setText("$: " + BigDecimal.valueOf(clicksAm).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");
         }
@@ -355,7 +361,7 @@ public class truppenklicker extends JFrame implements ActionListener{
             if (clicksAm >= 3000000) {
                 clicksAm = clicksAm - 3000000;
                 hamburgd = hamburgd + 1;
-                hamburglabel.setText("Fregatte H.:: " + String.valueOf(hamburgd) + "  ");
+                hamburglabel.setText("Fregatte H.: " + String.valueOf(hamburgd) + "  ");
                 pps = pps + 1.895;
                 clicks.setText("$: " + BigDecimal.valueOf(clicksAm).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");
             } else {
@@ -370,7 +376,7 @@ public class truppenklicker extends JFrame implements ActionListener{
             }
         }
 
-        if (ae.getSource() == this.Test) {
+        if (ae.getSource() == this.speichern) {
             try {
                 File newTextFile = new File("/savegame.txt");
 
@@ -378,6 +384,18 @@ public class truppenklicker extends JFrame implements ActionListener{
                 fw.write(String.valueOf(clicksAm));
                 fw.newLine();
                 fw.write(String.valueOf(pps));
+                fw.newLine();
+                fw.write(String.valueOf(soldaten));
+                fw.newLine();
+                fw.write(String.valueOf(g36s));
+                fw.newLine();
+                fw.write(String.valueOf(offiziere));
+                fw.newLine();
+                fw.write(String.valueOf(panzerd));
+                fw.newLine();
+                fw.write(String.valueOf(p3cs));
+                fw.newLine();
+                fw.write(String.valueOf(hamburgd));
                 fw.newLine();
                 fw.flush();
                 fw.close();
@@ -388,10 +406,11 @@ public class truppenklicker extends JFrame implements ActionListener{
             }
         }
 
-        if (ae.getSource() == this.Test2) {
+        if (ae.getSource() == this.laden) {
             ladeDatei();
 
         }
+
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
                 @Override
@@ -405,32 +424,56 @@ public class truppenklicker extends JFrame implements ActionListener{
 
     }
 
-    private void ladeDatei(String datName) { 
+    public void ladeDatei(){ 
 
-        File file = new File("/savegame"); 
+        FileInputStream fis = null;
+        BufferedReader reader = null;
 
-        if (!file.canRead() || !file.isFile()) 
-            System.exit(0); 
+        try {
+            fis = new FileInputStream("/savegame.txt");
+            reader = new BufferedReader(new InputStreamReader(fis));
 
-        BufferedReader in = null; 
-        try { 
-            in = new BufferedReader(new FileReader("/savegame")); 
-            String zeile = null; 
-            while ((zeile = in.readLine()) != null) { 
-                String clicksAm3 = in.readLine();
-                String pps2 = in.readLine();
+            String line = reader.readLine();
+            while(line != null){
+                clicksAm = Double.parseDouble(line);
+                line = reader.readLine();
+                pps = Double.parseDouble(line);
+                line = reader.readLine();
+                soldaten = Double.parseDouble(line);
+                line = reader.readLine();
+                g36s = Double.parseDouble(line);
+                line = reader.readLine();
+                offiziere = Double.parseDouble(line);
+                line = reader.readLine();
+                panzerd = Double.parseDouble(line);
+                line = reader.readLine();
+                p3cs = Double.parseDouble(line);
+                line = reader.readLine();
+                hamburgd = Double.parseDouble(line);
+                clicks.setText("$: " + BigDecimal.valueOf(clicksAm).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");
+                soldatenlabel.setText("Soldaten: " + String.valueOf(soldaten) + "  ");
+                G36Clabel.setText("G36C: " + String.valueOf(g36s) + "  ");
+                offizierlabel.setText("Offiziere: " + String.valueOf(offiziere) + "  ");
+                panzerlabel.setText("Panzer: " + String.valueOf(panzerd) + "  ");
+                P3Clabel.setText("P-3C Orion: " + String.valueOf(p3cs) + "  ");
+                hamburglabel.setText("Fregatte H.: " + String.valueOf(hamburgd) + "  ");
+                break;
+            }  
+           
 
-                clicksAm = Double.parseDouble(clicksAm3);
-                pps = Double.parseDouble(pps2);
-            } 
-        } catch (IOException e) { 
-            e.printStackTrace(); 
-        } finally { 
-            if (in != null) 
-                try { 
-                    in.close(); 
-                } catch (IOException e) { 
-            } 
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(truppenklicker.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(truppenklicker.class.getName()).log(Level.SEVERE, null, ex);
+
+        } finally {
+            try {
+                reader.close();
+                fis.close();
+            } catch (IOException ex) {
+                Logger.getLogger(truppenklicker.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
         } 
-    } 
+    }
 }
