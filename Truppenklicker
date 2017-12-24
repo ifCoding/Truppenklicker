@@ -149,7 +149,7 @@ public class truppenklicker extends JFrame implements ActionListener{
 
         Panzerfaustlabel = new JLabel();
         Panzerfaustlabel.setText("Panzerfäuste: " + String.valueOf(Panzerfaustd) + "  ");
-        
+
         kasernenlabel = new JLabel();
         kasernenlabel.setText("Kasernen: " + String.valueOf(kasernen) + "  ");
 
@@ -210,11 +210,11 @@ public class truppenklicker extends JFrame implements ActionListener{
         angriff = new JButton("Angriff!");
         angriff.setVisible(true);
         angriff.setPreferredSize(new Dimension(80, 30));
-        
+
         newrandom = new JButton("Neuer Gegner");
         newrandom.setVisible(true);
         newrandom.setPreferredSize(new Dimension(120, 30));
-        
+
         kasernenbutton = new JButton("Kaserne");
         kasernenbutton.setVisible(true);
         kasernenbutton.setPreferredSize(new Dimension(120, 30));
@@ -567,7 +567,7 @@ public class truppenklicker extends JFrame implements ActionListener{
             kriego.setVisible(true);
             Z.setVisible(true);
         }
-        
+
         if(ae.getSource() == this.newrandom) {
             Random randomGenerator = new Random();
             for (int idx = 0; idx<10; idx++) {
@@ -819,11 +819,9 @@ public class truppenklicker extends JFrame implements ActionListener{
             ladeDatei();
         }
 
-
     }
 
     public double timer(){
-
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
                 @Override
@@ -840,7 +838,7 @@ public class truppenklicker extends JFrame implements ActionListener{
         return 0;
 
     }
-    
+
     public double timer2(){
 
         Timer timer = new Timer();
@@ -848,7 +846,16 @@ public class truppenklicker extends JFrame implements ActionListener{
                 @Override
                 public void run() {
                     soldaten = soldaten + kasernen;
-                    pps = pps + 0.025;
+                    pps = pps + (kasernen * 0.025);
+                    soldatenlabel.setText("Soldaten: " + String.valueOf(soldaten) + "  ");
+                    G36Clabel.setText("G36C: " + String.valueOf(g36s) + "  ");
+                    offizierlabel.setText("Offiziere: " + String.valueOf(offiziere) + "  ");
+                    panzerlabel.setText("Panzer: " + String.valueOf(panzerd) + "  ");
+                    P3Clabel.setText("P-3C Orion: " + String.valueOf(p3cs) + "  ");
+                    hamburglabel.setText("Fregatte H.: " + String.valueOf(hamburgd) + "  ");
+                    Panzerwagenlabel.setText("Panzerwagen: " + String.valueOf(Panzerwagend) + "  ");
+                    Panzerfaustlabel.setText("Panzerfäuste: " + String.valueOf(Panzerfaustd) + "  ");
+                    kasernenlabel.setText("Kasernen: " + String.valueOf(kasernen) + "  ");
 
                 }
             }, 10000, 10000);
