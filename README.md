@@ -3,3 +3,4 @@ Ever wanted to manage the German armed forces? Now you have the chance to! Play 
 
 
 Map mit Ländern bei der man taktische züge einsetzt um ein Land zu attackieren, diese länder setzen nach kontigent Resourcen ein und später wird entschieden wer gewinnt
+Nachbarländer nach und nach erobern
