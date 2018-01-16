@@ -763,8 +763,6 @@ public class truppenklicker extends JFrame implements ActionListener{
                 BufferedWriter fw = new BufferedWriter(new FileWriter(newTextFile));
                 fw.write(String.valueOf(clicksAm));
                 fw.newLine();
-                fw.write(String.valueOf(pps));
-                fw.newLine();
                 fw.write(String.valueOf(soldaten));
                 fw.newLine();
                 fw.write(String.valueOf(g36s));
@@ -804,7 +802,7 @@ public class truppenklicker extends JFrame implements ActionListener{
         timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-
+                    pps = (soldaten * 0.025) + (g36s * 0.08) + (offiziere * 0.1) + (panzerd * 1.65) + (p3cs * 1.795) + (hamburgd * 1.895) + (Panzerwagend * 1.35) + (Panzerfaustd * 0.095) + (kasernen * 0.025);
                     clicksAm = clicksAm + pps;
                     clicks.setText("$: " + BigDecimal.valueOf(clicksAm).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");
                     warpower = (soldaten / 10) + (g36s / 15) + (offiziere / 9) + (panzerd / 3) + (p3cs / 3) + (hamburgd / 1.5) + (Panzerwagend / 5) + (Panzerfaustd / 8);
@@ -824,7 +822,6 @@ public class truppenklicker extends JFrame implements ActionListener{
                 @Override
                 public void run() {
                     soldaten = soldaten + kasernen;
-                    pps = pps + (kasernen * 0.025);
                     soldatenlabel.setText("Soldaten: " + String.valueOf(soldaten) + "  ");
                     G36Clabel.setText("G36C: " + String.valueOf(g36s) + "  ");
                     offizierlabel.setText("Offiziere: " + String.valueOf(offiziere) + "  ");
@@ -854,8 +851,6 @@ public class truppenklicker extends JFrame implements ActionListener{
             String line = reader.readLine();
             while(line != null){
                 clicksAm = Double.parseDouble(line);
-                line = reader.readLine();
-                pps = Double.parseDouble(line);
                 line = reader.readLine();
                 soldaten = Double.parseDouble(line);
                 line = reader.readLine();
