@@ -93,6 +93,8 @@ public class truppenklicker extends JFrame implements ActionListener{
     JButton angriff;
     JButton newrandom;
     JButton kasernenbutton;
+    JButton ja;
+    JButton nein;
 
     JButton soldatenB;
     JButton Offizier;
@@ -106,7 +108,8 @@ public class truppenklicker extends JFrame implements ActionListener{
 
     JMenuBar menuBar;
     JMenu menu, menu2, menu3, menu4, menu5, menu6, menu7, menu8;
-    JMenuItem menuItem, menuItem1, menuItem2, menuItem3, menuItem4, menuItem5, menuItem6, menuItem7, menuItem8, menuItem9, menuItem10, menuItem11, menuItem12;
+    JMenuItem menuItem, menuItem1, menuItem2, menuItem3, menuItem4, menuItem5, menuItem6, menuItem7, menuItem8, menuItem9, menuItem10, menuItem11, menuItem12, menuItem14;
+    JCheckBoxMenuItem menuItem13;
 
     public truppenklicker()
     {
@@ -172,6 +175,8 @@ public class truppenklicker extends JFrame implements ActionListener{
         speichern = new JButton("Speichern");
         laden = new JButton("Laden");
         Krieg = new JButton("Krieg");
+        ja = new JButton("Ja");
+        nein = new JButton("Nein");
 
         soldatenB = new JButton("Soldat");
         soldatenB.setVisible(true);
@@ -257,7 +262,9 @@ public class truppenklicker extends JFrame implements ActionListener{
         menuItem10 = new JMenuItem("Kriegsübersicht");
         menuItem11 = new JMenuItem("Speichern");
         menuItem12 = new JMenuItem("Laden");
-        
+        menuItem13 = new JCheckBoxMenuItem("Debug/Cheatmode");
+        menuItem14 = new JMenuItem("Zurücksetzen");
+
         menu.add(menuItem);
         menu.add(menuItem2);
         menu2.add(menuItem3);
@@ -270,6 +277,9 @@ public class truppenklicker extends JFrame implements ActionListener{
         menu7.add(menuItem10);
         menu8.add(menuItem11);
         menu8.add(menuItem12);
+        menu8.add(menuItem14);
+        menu8.addSeparator();
+        menu8.add(menuItem13);
 
         clickerS.addActionListener(this);
         Personal.addActionListener(this);
@@ -294,6 +304,8 @@ public class truppenklicker extends JFrame implements ActionListener{
         newrandom.addActionListener(this);
         Personalgeb.addActionListener(this);
         kasernenbutton.addActionListener(this);
+        ja.addActionListener(this);
+        nein.addActionListener(this);
         menuItem.addActionListener(this);
         menuItem2.addActionListener(this);
         menuItem3.addActionListener(this);
@@ -306,6 +318,8 @@ public class truppenklicker extends JFrame implements ActionListener{
         menuItem10.addActionListener(this);
         menuItem11.addActionListener(this);
         menuItem12.addActionListener(this);
+        menuItem13.addActionListener(this);
+        menuItem14.addActionListener(this);
         this.add(outer);
 
         nested.add(clicks);
@@ -512,233 +526,15 @@ public class truppenklicker extends JFrame implements ActionListener{
         }
 
         if(ae.getSource() == this.menuItem10) {
-            JFrame Z = new JFrame();
-            Z.setTitle("In den Krieg ziehen");
-            Z.setSize(800,600);
-            kriego = new JPanel();
-            Z.add(kriego);
-            Random randomGenerator = new Random();
-            for (int idx = 0; idx<10; idx++) {
-                randomInt = 1 + randomGenerator.nextInt(6);
-            }
-            if (randomInt == 1) {
-                krieglabel.setText("Ihr gegner: USA. Kriegskraft: " + usapower);
-                kriego.add(angriff);
-            } else if (randomInt == 2) {
-                krieglabel.setText("Ihr gegner: Russland. Kriegskraft: " + ruspower);
-                kriego.add(angriff);
-            } else if (randomInt == 3) {
-                krieglabel.setText("Ihr gegner: Polen. Kriegskraft: " + polenpower);
-                kriego.add(angriff);
-            }else if (randomInt == 4) {
-                krieglabel.setText("Ihr gegner: Frankreich. Kriegskraft: " + frankreichpower);
-                kriego.add(angriff);
-            }else if (randomInt == 5) {
-                krieglabel.setText("Ihr gegner: Türkei. Kriegskraft: " + turkenpower);
-                kriego.add(angriff);
-            }else if (randomInt == 6) {
-                krieglabel.setText("Ihr gegner: Nordkorea. Kriegskraft: " + nordkoreapower);
-                kriego.add(angriff);
-            }
-            kriego.add(krieglabel);
-            kriego.add(newrandom);
-            kriego.setVisible(true);
-            Z.setVisible(true);
+            kriegrechner();
         }
 
         if(ae.getSource() == this.newrandom) {
-            Random randomGenerator = new Random();
-            for (int idx = 0; idx<10; idx++) {
-                randomInt = 1 + randomGenerator.nextInt(6);
-            }
-            if (randomInt == 1) {
-                krieglabel.setText("Ihr gegner: USA. Kriegskraft: " + usapower);
-                kriego.add(angriff);
-            } else if (randomInt == 2) {
-                krieglabel.setText("Ihr gegner: Russland. Kriegskraft: " + ruspower);
-                kriego.add(angriff);
-            } else if (randomInt == 3) {
-                krieglabel.setText("Ihr gegner: Polen. Kriegskraft: " + polenpower);
-                kriego.add(angriff);
-            }else if (randomInt == 4) {
-                krieglabel.setText("Ihr gegner: Frankreich. Kriegskraft: " + frankreichpower);
-                kriego.add(angriff);
-            }else if (randomInt == 5) {
-                krieglabel.setText("Ihr gegner: Türkei. Kriegskraft: " + turkenpower);
-                kriego.add(angriff);
-            }else if (randomInt == 6) {
-                krieglabel.setText("Ihr gegner: Nordkorea. Kriegskraft: " + nordkoreapower);
-                kriego.add(angriff);
-            }
-            kriego.add(krieglabel);
-            kriego.add(newrandom);
-            kriego.setVisible(true);
+            kriegrechnernewrandom();
         }
 
         if(ae.getSource() == this.angriff) {
-
-            if(randomInt == 1){
-                if (usapower > warpower){
-                    JDialog niederlage = new JDialog();
-                    niederlage.setTitle("Niederlage!");
-                    niederlage.setSize(500, 150);
-                    niederlage.setModal(true);
-                    niederlage.add(new JLabel("Der Krieg gegen die USA wurde verloren. Dir werden alle Soldaten abgezogen."));
-                    pps = pps - (soldaten * 0.025);
-                    soldaten = 0;
-                    soldatenlabel.setText("Soldaten: " + String.valueOf(soldaten) + "  ");
-                    niederlage.setVisible(true);
-                } else if(usapower < warpower) {
-                    JDialog sieg = new JDialog();
-                    sieg.setTitle("Sieg!");
-                    sieg.setSize(180, 80);
-                    sieg.setModal(true);
-                    sieg.add(new JLabel("Der Krieg gegen die USA wurde gewonnen!"));
-                    sieg.add(new JLabel("Dir werden als Kriegsvergütung 100 Soldaten, 10 Offiziere und $2500000 gutgeschrieben."));
-                    pps = pps + 3.5;
-                    soldaten = soldaten + 100;
-                    offiziere = offiziere + 10;
-                    clicksAm = clicksAm + 2500000;
-                    soldatenlabel.setText("Soldaten: " + String.valueOf(soldaten) + "  ");
-                    offizierlabel.setText("Offiziere: " + String.valueOf(offiziere) + "  ");
-                    sieg.setVisible(true);
-                }
-            }
-            if(randomInt == 2){
-                if (ruspower > warpower){
-                    JDialog niederlage = new JDialog();
-                    niederlage.setTitle("Niederlage!");
-                    niederlage.setSize(500, 150);
-                    niederlage.setModal(true);
-                    niederlage.add(new JLabel("Der Krieg gegen die Russen wurde verloren. Dir werden alle Soldaten abgezogen."));
-                    pps = pps - (soldaten * 0.025);
-                    soldaten = 0;
-                    soldatenlabel.setText("Soldaten: " + String.valueOf(soldaten) + "  ");
-                    niederlage.setVisible(true);
-                } else if(ruspower < warpower) {
-                    JDialog sieg = new JDialog();
-                    sieg.setTitle("Sieg!");
-                    sieg.setSize(180, 80);
-                    sieg.setModal(true);
-                    sieg.add(new JLabel("Der Krieg gegen die Russen wurde gewonnen!"));
-                    sieg.add(new JLabel("Dir werden als Kriegsvergütung 115 Soldaten, 12 Offiziere und $3000000 gutgeschrieben."));
-                    pps = pps + 4.075;
-                    soldaten = soldaten + 115;
-                    offiziere = offiziere + 12;
-                    clicksAm = clicksAm + 3000000;
-                    soldatenlabel.setText("Soldaten: " + String.valueOf(soldaten) + "  ");
-                    offizierlabel.setText("Offiziere: " + String.valueOf(offiziere) + "  ");
-                    sieg.setVisible(true);
-                }
-            }
-            if(randomInt == 3){
-                if (polenpower > warpower){
-                    JDialog niederlage = new JDialog();
-                    niederlage.setTitle("Niederlage!");
-                    niederlage.setSize(500, 150);
-                    niederlage.setModal(true);
-                    niederlage.add(new JLabel("Der Krieg gegen die Polen wurde verloren. Dir werden alle Soldaten abgezogen."));
-                    pps = pps - (soldaten * 0.025);
-                    soldaten = 0;
-                    soldatenlabel.setText("Soldaten: " + String.valueOf(soldaten) + "  ");
-                    niederlage.setVisible(true);
-                } else if(polenpower < warpower) {
-                    JDialog sieg = new JDialog();
-                    sieg.setTitle("Sieg!");
-                    sieg.setSize(180, 80);
-                    sieg.setModal(true);
-                    sieg.add(new JLabel("Der Krieg gegen die Polen wurde gewonnen!"));
-                    sieg.add(new JLabel("Dir werden als Kriegsvergütung 75 Soldaten, 6 Offiziere und $1500000 gutgeschrieben."));
-                    pps = pps + 2.475;
-                    soldaten = soldaten + 75;
-                    offiziere = offiziere + 6;
-                    clicksAm = clicksAm + 1500000;
-                    soldatenlabel.setText("Soldaten: " + String.valueOf(soldaten) + "  ");
-                    offizierlabel.setText("Offiziere: " + String.valueOf(offiziere) + "  ");
-                    sieg.setVisible(true);
-                }
-            }
-            if(randomInt == 4){
-                if (frankreichpower > warpower){
-                    JDialog niederlage = new JDialog();
-                    niederlage.setTitle("Niederlage!");
-                    niederlage.setSize(500, 150);
-                    niederlage.setModal(true);
-                    niederlage.add(new JLabel("Der Krieg gegen die Franzosen wurde verloren. Dir werden alle Soldaten abgezogen."));
-                    pps = pps - (soldaten * 0.025);
-                    soldaten = 0;
-                    soldatenlabel.setText("Soldaten: " + String.valueOf(soldaten) + "  ");
-                    niederlage.setVisible(true);
-                } else if(frankreichpower < warpower) {
-                    JDialog sieg = new JDialog();
-                    sieg.setTitle("Sieg!");
-                    sieg.setSize(180, 80);
-                    sieg.setModal(true);
-                    sieg.add(new JLabel("Der Krieg gegen die Franzosen wurde gewonnen!"));
-                    sieg.add(new JLabel("Dir werden als Kriegsvergütung 5 Soldaten, 1 Offiziere und $250000 gutgeschrieben."));
-                    pps = pps + 0.225;
-                    soldaten = soldaten + 5;
-                    offiziere = offiziere + 1;
-                    clicksAm = clicksAm + 250000;
-                    soldatenlabel.setText("Soldaten: " + String.valueOf(soldaten) + "  ");
-                    offizierlabel.setText("Offiziere: " + String.valueOf(offiziere) + "  ");
-                    sieg.setVisible(true);
-                }
-            }
-            if(randomInt == 5){
-                if (turkenpower > warpower){
-                    JDialog niederlage = new JDialog();
-                    niederlage.setTitle("Niederlage!");
-                    niederlage.setSize(500, 150);
-                    niederlage.setModal(true);
-                    niederlage.add(new JLabel("Der Krieg gegen die Türken wurde verloren. Dir werden alle Soldaten abgezogen."));
-                    pps = pps - (soldaten * 0.025);
-                    soldaten = 0;
-                    soldatenlabel.setText("Soldaten: " + String.valueOf(soldaten) + "  ");
-                    niederlage.setVisible(true);
-                } else if(turkenpower < warpower) {
-                    JDialog sieg = new JDialog();
-                    sieg.setTitle("Sieg!");
-                    sieg.setSize(180, 80);
-                    sieg.setModal(true);
-                    sieg.add(new JLabel("Der Krieg gegen die Türken wurde gewonnen!"));
-                    sieg.add(new JLabel("Dir werden als Kriegsvergütung 90 Soldaten, 6 Offiziere und $2000000 gutgeschrieben."));
-                    pps = pps + 2.85;
-                    soldaten = soldaten + 90;
-                    offiziere = offiziere + 6;
-                    clicksAm = clicksAm + 2000000;
-                    soldatenlabel.setText("Soldaten: " + String.valueOf(soldaten) + "  ");
-                    offizierlabel.setText("Offiziere: " + String.valueOf(offiziere) + "  ");
-                    sieg.setVisible(true);
-                }
-            }
-            if(randomInt == 6){
-                if (nordkoreapower > warpower){
-                    JDialog niederlage = new JDialog();
-                    niederlage.setTitle("Niederlage!");
-                    niederlage.setSize(500, 150);
-                    niederlage.setModal(true);
-                    niederlage.add(new JLabel("Der Krieg gegen die Nordkorea wurde verloren. Dir werden alle Soldaten abgezogen."));
-                    pps = pps - (soldaten * 0.025);
-                    soldaten = 0;
-                    soldatenlabel.setText("Soldaten: " + String.valueOf(soldaten) + "  ");
-                    niederlage.setVisible(true);
-                } else if(nordkoreapower < warpower) {
-                    JDialog sieg = new JDialog();
-                    sieg.setTitle("Sieg!");
-                    sieg.setSize(180, 80);
-                    sieg.setModal(true);
-                    sieg.add(new JLabel("Der Krieg gegen die Nordkorea wurde gewonnen!"));
-                    sieg.add(new JLabel("Dir werden als Kriegsvergütung 80 Soldaten, 5 Offiziere und $1800000 gutgeschrieben."));
-                    pps = pps + 2.5;
-                    soldaten = soldaten + 80;
-                    offiziere = offiziere + 5;
-                    clicksAm = clicksAm + 1800000;
-                    soldatenlabel.setText("Soldaten: " + String.valueOf(soldaten) + "  ");
-                    offizierlabel.setText("Offiziere: " + String.valueOf(offiziere) + "  ");
-                    sieg.setVisible(true);
-                }
-            }
+            angriffmethode();
         }
 
         if (ae.getSource() == this.menuItem11) {
@@ -751,6 +547,45 @@ public class truppenklicker extends JFrame implements ActionListener{
             save.add(speichernein);
             save.setVisible(true);
             A.setVisible(true);
+        }
+        if(ae.getSource() == this.menuItem14) {
+            A.setTitle("Zurücksetzen");
+            A.setSize(300,150);
+            save = new JPanel();
+            A.add(save);
+            save.add(new JLabel("Wirklich zurücksetzen?"));    
+            save.add(ja);
+            save.add(nein);
+            save.setVisible(true);
+            A.setVisible(true);
+        }
+        if (ae.getSource() == this.ja) {
+            A.setVisible(false);
+            A.dispose();
+            clicksAm = 0;
+            soldaten = 0;
+            g36s = 0;
+            offiziere = 0;
+            panzerd = 0;
+            p3cs = 0; 
+            hamburgd = 0;
+            Panzerwagend = 0;
+            Panzerfaustd = 0;
+            kasernen = 0;
+            clicks.setText("$: " + BigDecimal.valueOf(clicksAm).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");
+            soldatenlabel.setText("Soldaten: " + String.valueOf(soldaten) + "  ");
+            G36Clabel.setText("G36C: " + String.valueOf(g36s) + "  ");
+            offizierlabel.setText("Offiziere: " + String.valueOf(offiziere) + "  ");
+            panzerlabel.setText("Panzer: " + String.valueOf(panzerd) + "  ");
+            P3Clabel.setText("P-3C Orion: " + String.valueOf(p3cs) + "  ");
+            hamburglabel.setText("Fregatte H.: " + String.valueOf(hamburgd) + "  ");
+            Panzerwagenlabel.setText("Panzerwagen: " + String.valueOf(Panzerwagend) + "  ");
+            Panzerfaustlabel.setText("Panzerfäuste: " + String.valueOf(Panzerfaustd) + "   ");
+            kasernenlabel.setText("Kasernen: " + String.valueOf(kasernen) + "  ");
+        }
+        if (ae.getSource() == this.nein) {
+            A.setVisible(false);
+            A.dispose();
         }
         if (ae.getSource() == this.speichernein) {
             A.setVisible(false);
@@ -793,6 +628,121 @@ public class truppenklicker extends JFrame implements ActionListener{
 
         if (ae.getSource() == this.menuItem12) {
             ladeDatei();
+        }
+
+        if (ae.getSource() == this.menuItem13) {
+            if (menuItem13.isSelected()) {
+                try {
+                    File newTextFile = new File("savebeforecheat.txt");
+
+                    BufferedWriter fw = new BufferedWriter(new FileWriter(newTextFile));
+                    fw.write(String.valueOf(clicksAm));
+                    fw.newLine();
+                    fw.write(String.valueOf(soldaten));
+                    fw.newLine();
+                    fw.write(String.valueOf(g36s));
+                    fw.newLine();
+                    fw.write(String.valueOf(offiziere));
+                    fw.newLine();
+                    fw.write(String.valueOf(panzerd));
+                    fw.newLine();
+                    fw.write(String.valueOf(p3cs));
+                    fw.newLine();
+                    fw.write(String.valueOf(hamburgd));
+                    fw.newLine();
+                    fw.write(String.valueOf(Panzerwagend));
+                    fw.newLine();
+                    fw.write(String.valueOf(Panzerfaustd));
+                    fw.newLine();
+                    fw.write(String.valueOf(kasernen));
+                    fw.newLine();
+                    fw.flush();
+                    fw.close();
+                    A.setVisible(false);
+                    A.dispose(); 
+
+                } catch (IOException iox) {
+                    iox.printStackTrace();
+                }
+                clicksAm = 2020200000;
+                soldaten = 100;
+                g36s = 100;
+                offiziere = 100;
+                panzerd = 1;
+                p3cs = 11; 
+                hamburgd = 1;
+                Panzerwagend = 100;
+                Panzerfaustd = 100;
+                kasernen = 1;
+                clicks.setText("$: " + BigDecimal.valueOf(clicksAm).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");
+                soldatenlabel.setText("Soldaten: " + String.valueOf(soldaten) + "  ");
+                G36Clabel.setText("G36C: " + String.valueOf(g36s) + "  ");
+                offizierlabel.setText("Offiziere: " + String.valueOf(offiziere) + "  ");
+                panzerlabel.setText("Panzer: " + String.valueOf(panzerd) + "  ");
+                P3Clabel.setText("P-3C Orion: " + String.valueOf(p3cs) + "  ");
+                hamburglabel.setText("Fregatte H.: " + String.valueOf(hamburgd) + "  ");
+                Panzerwagenlabel.setText("Panzerwagen: " + String.valueOf(Panzerwagend) + "  ");
+                Panzerfaustlabel.setText("Panzerfäuste: " + String.valueOf(Panzerfaustd) + "   ");
+                kasernenlabel.setText("Kasernen: " + String.valueOf(kasernen) + "  ");
+            } else {
+
+                FileInputStream fis = null;
+                BufferedReader reader = null;
+
+                try {
+                    fis = new FileInputStream("savebeforecheat.txt");
+                    reader = new BufferedReader(new InputStreamReader(fis));
+
+                    String line = reader.readLine();
+                    while(line != null){
+                        clicksAm = Double.parseDouble(line);
+                        line = reader.readLine();
+                        soldaten = Double.parseDouble(line);
+                        line = reader.readLine();
+                        g36s = Double.parseDouble(line);
+                        line = reader.readLine();
+                        offiziere = Double.parseDouble(line);
+                        line = reader.readLine();
+                        panzerd = Double.parseDouble(line);
+                        line = reader.readLine();
+                        p3cs = Double.parseDouble(line);
+                        line = reader.readLine();
+                        hamburgd = Double.parseDouble(line);
+                        line = reader.readLine();
+                        Panzerwagend = Double.parseDouble(line);
+                        line = reader.readLine();
+                        Panzerfaustd = Double.parseDouble(line);
+                        line = reader.readLine();
+                        kasernen = Double.parseDouble(line);
+                        clicks.setText("$: " + BigDecimal.valueOf(clicksAm).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");
+                        soldatenlabel.setText("Soldaten: " + String.valueOf(soldaten) + "  ");
+                        G36Clabel.setText("G36C: " + String.valueOf(g36s) + "  ");
+                        offizierlabel.setText("Offiziere: " + String.valueOf(offiziere) + "  ");
+                        panzerlabel.setText("Panzer: " + String.valueOf(panzerd) + "  ");
+                        P3Clabel.setText("P-3C Orion: " + String.valueOf(p3cs) + "  ");
+                        hamburglabel.setText("Fregatte H.: " + String.valueOf(hamburgd) + "  ");
+                        Panzerwagenlabel.setText("Panzerwagen: " + String.valueOf(Panzerwagend) + "  ");
+                        Panzerfaustlabel.setText("Panzerfäuste: " + String.valueOf(Panzerfaustd) + "   ");
+                        kasernenlabel.setText("Kasernen: " + String.valueOf(kasernen) + "  ");
+                        break;
+                    }  
+
+                } catch (FileNotFoundException ex) {
+                    Logger.getLogger(truppenklicker.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(truppenklicker.class.getName()).log(Level.SEVERE, null, ex);
+
+                } finally {
+                    try {
+                        reader.close();
+                        fis.close();
+                    } catch (IOException ex) {
+                        Logger.getLogger(truppenklicker.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                } 
+
+            }
         }
 
     }
@@ -839,8 +789,236 @@ public class truppenklicker extends JFrame implements ActionListener{
 
     }
 
-    public void ladeDatei(){ 
+    public void kriegrechner(){
+        JFrame Z = new JFrame();
+        Z.setTitle("In den Krieg ziehen");
+        Z.setSize(800,600);
+        kriego = new JPanel();
+        Z.add(kriego);
+        Random randomGenerator = new Random();
+        for (int idx = 0; idx<10; idx++) {
+            randomInt = 1 + randomGenerator.nextInt(6);
+        }
+        if (randomInt == 1) {
+            krieglabel.setText("Ihr gegner: USA. Kriegskraft: " + usapower);
+            kriego.add(angriff);
+        } else if (randomInt == 2) {
+            krieglabel.setText("Ihr gegner: Russland. Kriegskraft: " + ruspower);
+            kriego.add(angriff);
+        } else if (randomInt == 3) {
+            krieglabel.setText("Ihr gegner: Polen. Kriegskraft: " + polenpower);
+            kriego.add(angriff);
+        }else if (randomInt == 4) {
+            krieglabel.setText("Ihr gegner: Frankreich. Kriegskraft: " + frankreichpower);
+            kriego.add(angriff);
+        }else if (randomInt == 5) {
+            krieglabel.setText("Ihr gegner: Türkei. Kriegskraft: " + turkenpower);
+            kriego.add(angriff);
+        }else if (randomInt == 6) {
+            krieglabel.setText("Ihr gegner: Nordkorea. Kriegskraft: " + nordkoreapower);
+            kriego.add(angriff);
+        }
+        kriego.add(krieglabel);
+        kriego.add(newrandom);
+        kriego.setVisible(true);
+        Z.setVisible(true);
+    }
 
+    public void kriegrechnernewrandom(){
+        Random randomGenerator = new Random();
+        for (int idx = 0; idx<10; idx++) {
+            randomInt = 1 + randomGenerator.nextInt(6);
+        }
+        if (randomInt == 1) {
+            krieglabel.setText("Ihr gegner: USA. Kriegskraft: " + usapower);
+            kriego.add(angriff);
+        } else if (randomInt == 2) {
+            krieglabel.setText("Ihr gegner: Russland. Kriegskraft: " + ruspower);
+            kriego.add(angriff);
+        } else if (randomInt == 3) {
+            krieglabel.setText("Ihr gegner: Polen. Kriegskraft: " + polenpower);
+            kriego.add(angriff);
+        }else if (randomInt == 4) {
+            krieglabel.setText("Ihr gegner: Frankreich. Kriegskraft: " + frankreichpower);
+            kriego.add(angriff);
+        }else if (randomInt == 5) {
+            krieglabel.setText("Ihr gegner: Türkei. Kriegskraft: " + turkenpower);
+            kriego.add(angriff);
+        }else if (randomInt == 6) {
+            krieglabel.setText("Ihr gegner: Nordkorea. Kriegskraft: " + nordkoreapower);
+            kriego.add(angriff);
+        }
+        kriego.add(krieglabel);
+        kriego.add(newrandom);
+        kriego.setVisible(true);   
+    }
+
+    public void angriffmethode(){
+        if(randomInt == 1){
+            if (usapower > warpower){
+                JDialog niederlage = new JDialog();
+                niederlage.setTitle("Niederlage!");
+                niederlage.setSize(500, 100);
+                niederlage.setModal(true);
+                niederlage.add(new JLabel("Der Krieg gegen die USA wurde verloren. Dir werden alle Soldaten abgezogen."));
+                pps = pps - (soldaten * 0.025);
+                soldaten = 0;
+                soldatenlabel.setText("Soldaten: " + String.valueOf(soldaten) + "  ");
+                niederlage.setVisible(true);
+            } else if(usapower < warpower) {
+                JDialog sieg = new JDialog();
+                sieg.setTitle("Sieg!");
+                sieg.setSize(550, 100);
+                sieg.setModal(true);
+                sieg.add(new JLabel("Der Krieg gegen die USA wurde gewonnen!"));
+                sieg.add(new JLabel("Dir werden als Kriegsvergütung 100 Soldaten, 10 Offiziere und $2500000 gutgeschrieben."));
+                pps = pps + 3.5;
+                soldaten = soldaten + 100;
+                offiziere = offiziere + 10;
+                clicksAm = clicksAm + 2500000;
+                soldatenlabel.setText("Soldaten: " + String.valueOf(soldaten) + "  ");
+                offizierlabel.setText("Offiziere: " + String.valueOf(offiziere) + "  ");
+                sieg.setVisible(true);
+            }
+        }
+        if(randomInt == 2){
+            if (ruspower > warpower){
+                JDialog niederlage = new JDialog();
+                niederlage.setTitle("Niederlage!");
+                niederlage.setSize(500, 100);
+                niederlage.setModal(true);
+                niederlage.add(new JLabel("Der Krieg gegen die Russen wurde verloren. Dir werden alle Soldaten abgezogen."));
+                pps = pps - (soldaten * 0.025);
+                soldaten = 0;
+                soldatenlabel.setText("Soldaten: " + String.valueOf(soldaten) + "  ");
+                niederlage.setVisible(true);
+            } else if(ruspower < warpower) {
+                JDialog sieg = new JDialog();
+                sieg.setTitle("Sieg!");
+                sieg.setSize(550, 100);
+                sieg.setModal(true);
+                sieg.add(new JLabel("Der Krieg gegen die Russen wurde gewonnen!"));
+                sieg.add(new JLabel("Dir werden als Kriegsvergütung 115 Soldaten, 12 Offiziere und $3000000 gutgeschrieben."));
+                pps = pps + 4.075;
+                soldaten = soldaten + 115;
+                offiziere = offiziere + 12;
+                clicksAm = clicksAm + 3000000;
+                soldatenlabel.setText("Soldaten: " + String.valueOf(soldaten) + "  ");
+                offizierlabel.setText("Offiziere: " + String.valueOf(offiziere) + "  ");
+                sieg.setVisible(true);
+            }
+        }
+        if(randomInt == 3){
+            if (polenpower > warpower){
+                JDialog niederlage = new JDialog();
+                niederlage.setTitle("Niederlage!");
+                niederlage.setSize(500, 100);
+                niederlage.setModal(true);
+                niederlage.add(new JLabel("Der Krieg gegen die Polen wurde verloren. Dir werden alle Soldaten abgezogen."));
+                pps = pps - (soldaten * 0.025);
+                soldaten = 0;
+                soldatenlabel.setText("Soldaten: " + String.valueOf(soldaten) + "  ");
+                niederlage.setVisible(true);
+            } else if(polenpower < warpower) {
+                JDialog sieg = new JDialog();
+                sieg.setTitle("Sieg!");
+                sieg.setSize(550, 100);
+                sieg.setModal(true);
+                sieg.add(new JLabel("Der Krieg gegen die Polen wurde gewonnen!"));
+                sieg.add(new JLabel("Dir werden als Kriegsvergütung 75 Soldaten, 6 Offiziere und $1500000 gutgeschrieben."));
+                pps = pps + 2.475;
+                soldaten = soldaten + 75;
+                offiziere = offiziere + 6;
+                clicksAm = clicksAm + 1500000;
+                soldatenlabel.setText("Soldaten: " + String.valueOf(soldaten) + "  ");
+                offizierlabel.setText("Offiziere: " + String.valueOf(offiziere) + "  ");
+                sieg.setVisible(true);
+            }
+        }
+        if(randomInt == 4){
+            if (frankreichpower > warpower){
+                JDialog niederlage = new JDialog();
+                niederlage.setTitle("Niederlage!");
+                niederlage.setSize(500, 100);
+                niederlage.setModal(true);
+                niederlage.add(new JLabel("Der Krieg gegen die Franzosen wurde verloren. Dir werden alle Soldaten abgezogen."));
+                pps = pps - (soldaten * 0.025);
+                soldaten = 0;
+                soldatenlabel.setText("Soldaten: " + String.valueOf(soldaten) + "  ");
+                niederlage.setVisible(true);
+            } else if(frankreichpower < warpower) {
+                JDialog sieg = new JDialog();
+                sieg.setTitle("Sieg!");
+                sieg.setSize(550, 100);
+                sieg.setModal(true);
+                sieg.add(new JLabel("Der Krieg gegen die Franzosen wurde gewonnen!"));
+                sieg.add(new JLabel("Dir werden als Kriegsvergütung 5 Soldaten, 1 Offiziere und $250000 gutgeschrieben."));
+                pps = pps + 0.225;
+                soldaten = soldaten + 5;
+                offiziere = offiziere + 1;
+                clicksAm = clicksAm + 250000;
+                soldatenlabel.setText("Soldaten: " + String.valueOf(soldaten) + "  ");
+                offizierlabel.setText("Offiziere: " + String.valueOf(offiziere) + "  ");
+                sieg.setVisible(true);
+            }
+        }
+        if(randomInt == 5){
+            if (turkenpower > warpower){
+                JDialog niederlage = new JDialog();
+                niederlage.setTitle("Niederlage!");
+                niederlage.setSize(500, 100);
+                niederlage.setModal(true);
+                niederlage.add(new JLabel("Der Krieg gegen die Türken wurde verloren. Dir werden alle Soldaten abgezogen."));
+                pps = pps - (soldaten * 0.025);
+                soldaten = 0;
+                soldatenlabel.setText("Soldaten: " + String.valueOf(soldaten) + "  ");
+                niederlage.setVisible(true);
+            } else if(turkenpower < warpower) {
+                JDialog sieg = new JDialog();
+                sieg.setTitle("Sieg!");
+                sieg.setSize(550, 100);
+                sieg.setModal(true);
+                sieg.add(new JLabel("Der Krieg gegen die Türken wurde gewonnen!"));
+                sieg.add(new JLabel("Dir werden als Kriegsvergütung 90 Soldaten, 6 Offiziere und $2000000 gutgeschrieben."));
+                pps = pps + 2.85;
+                soldaten = soldaten + 90;
+                offiziere = offiziere + 6;
+                clicksAm = clicksAm + 2000000;
+                soldatenlabel.setText("Soldaten: " + String.valueOf(soldaten) + "  ");
+                offizierlabel.setText("Offiziere: " + String.valueOf(offiziere) + "  ");
+                sieg.setVisible(true);
+            }
+        }
+        if(randomInt == 6){
+            if (nordkoreapower > warpower){
+                JDialog niederlage = new JDialog();
+                niederlage.setTitle("Niederlage!");
+                niederlage.setSize(500, 100);
+                niederlage.setModal(true);
+                niederlage.add(new JLabel("Der Krieg gegen die Nordkorea wurde verloren. Dir werden alle Soldaten abgezogen."));
+                pps = pps - (soldaten * 0.025);
+                soldaten = 0;
+                soldatenlabel.setText("Soldaten: " + String.valueOf(soldaten) + "  ");
+                niederlage.setVisible(true);
+            } else if(nordkoreapower < warpower) {
+                JDialog sieg = new JDialog();
+                sieg.setTitle("Sieg!");
+                sieg.setSize(550, 100);
+                sieg.setModal(true);
+                sieg.add(new JLabel("Der Krieg gegen die Nordkorea wurde gewonnen!"));
+                sieg.add(new JLabel("Dir werden als Kriegsvergütung 80 Soldaten, 5 Offiziere und $1800000 gutgeschrieben."));
+                pps = pps + 2.5;
+                soldaten = soldaten + 80;
+                offiziere = offiziere + 5;
+                clicksAm = clicksAm + 1800000;
+                soldatenlabel.setText("Soldaten: " + String.valueOf(soldaten) + "  ");
+                offizierlabel.setText("Offiziere: " + String.valueOf(offiziere) + "  ");
+                sieg.setVisible(true);
+            }
+        }   
+    }
+
+    public void ladeDatei(){ 
         FileInputStream fis = null;
         BufferedReader reader = null;
 
