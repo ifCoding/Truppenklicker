@@ -33,6 +33,7 @@ public class truppenklicker extends JFrame implements ActionListener{
     double g36s = 0;
     double panzerd = 0;
     double p3cs = 0;
+    double eufid = 0;
     double hamburgd = 0;
     String clicksAm3;
     String pps2;
@@ -71,6 +72,7 @@ public class truppenklicker extends JFrame implements ActionListener{
     JLabel G36Clabel;
     JLabel panzerlabel;
     JLabel P3Clabel;
+    JLabel Eufilabel;
     JLabel hamburglabel;
     JLabel Panzerwagenlabel;
     JLabel Panzerfaustlabel;
@@ -108,7 +110,7 @@ public class truppenklicker extends JFrame implements ActionListener{
 
     JMenuBar menuBar;
     JMenu menu, menu2, menu3, menu4, menu5, menu6, menu7, menu8;
-    JMenuItem menuItem, menuItem1, menuItem2, menuItem3, menuItem4, menuItem5, menuItem6, menuItem7, menuItem8, menuItem9, menuItem10, menuItem11, menuItem12, menuItem14;
+    JMenuItem menuItem, menuItem1, menuItem2, menuItem3, menuItem4, menuItem5, menuItem6, menuItem7, menuItem8, menuItem9, menuItem10, menuItem11, menuItem12, menuItem14, menuItem15;
     JCheckBoxMenuItem menuItem13;
 
     public truppenklicker()
@@ -133,7 +135,7 @@ public class truppenklicker extends JFrame implements ActionListener{
         soldatenlabel.setText("Soldaten: " + String.valueOf(soldaten) + "  ");
 
         Preise = new JLabel();
-        Preise.setText("Preisübersicht: Soldat [30$]   G36C [500$]   Panzerfaust [850$]   Offizier [1.000$]   Panzerwagen [25.000$]   Panzer [250.000$]   P-3C Orion [2.500.000$]   Fregatte Hamburg [3.000.000$]   Kaserne [10.000.000$]   ");
+        Preise.setText("Preisübersicht: Soldat [30$]   G36C [500$]   Panzerfaust [850$]   Offizier [1.000$]   Panzerwagen [25.000$]   Panzer [250.000$]   P-3C Orion [2.500.000$]   Eurofighter [1.500.000$]   Fregatte Hamburg [3.000.000$]   Kaserne [10.000.000$]   ");
 
         warpowerlabel = new JLabel();
         warpowerlabel.setText("Kriegskraft: " + BigDecimal.valueOf(warpower).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN));
@@ -149,6 +151,9 @@ public class truppenklicker extends JFrame implements ActionListener{
 
         P3Clabel = new JLabel();
         P3Clabel.setText("P-3C Orion: " + String.valueOf(p3cs) + "  ");
+        
+        Eufilabel = new JLabel();
+        Eufilabel.setText("Eurofighter: " + String.valueOf(eufid) + "  ");
 
         hamburglabel = new JLabel();
         hamburglabel.setText("Fregatte H.: " + String.valueOf(hamburgd) + "  ");
@@ -178,37 +183,7 @@ public class truppenklicker extends JFrame implements ActionListener{
         ja = new JButton("Ja");
         nein = new JButton("Nein");
 
-        soldatenB = new JButton("Soldat");
-        soldatenB.setVisible(true);
-        soldatenB.setPreferredSize(new Dimension(80, 30));
-
-        Offizier = new JButton("Offizier");
-        Offizier.setVisible(true);
-        Offizier.setPreferredSize(new Dimension(80, 30));
-
-        G36C = new JButton("G36C");
-        G36C.setVisible(true);
-        G36C.setPreferredSize(new Dimension(80, 30));
-
-        Panzer = new JButton("Panzer");
-        Panzer.setVisible(true);
-        Panzer.setPreferredSize(new Dimension(80, 30));
-
-        P3C = new JButton("P-3C Orion");
-        P3C.setVisible(true);
-        P3C.setPreferredSize(new Dimension(100, 30));
-
-        Hamburg = new JButton("Fregatte Hamburg");
-        Hamburg.setVisible(true);
-        Hamburg.setPreferredSize(new Dimension(140, 30));
-
-        Panzerwagen = new JButton("Panzerwagen");
-        Panzerwagen.setVisible(true);
-        Panzerwagen.setPreferredSize(new Dimension(140, 30));
-
-        Panzerfaust = new JButton("Panzerfaust");
-        Panzerfaust.setVisible(true);
-        Panzerfaust.setPreferredSize(new Dimension(140, 30));
+       
 
         speicherja = new JButton("Ja");
         speicherja.setVisible(true);
@@ -264,6 +239,7 @@ public class truppenklicker extends JFrame implements ActionListener{
         menuItem12 = new JMenuItem("Laden");
         menuItem13 = new JCheckBoxMenuItem("Debug/Cheatmode");
         menuItem14 = new JMenuItem("Zurücksetzen");
+        menuItem15 = new JMenuItem("Eurofighter");
 
         menu.add(menuItem);
         menu.add(menuItem2);
@@ -272,6 +248,7 @@ public class truppenklicker extends JFrame implements ActionListener{
         menu3.add(menuItem5);
         menu3.add(menuItem6);
         menu4.add(menuItem7);
+        menu4.add(menuItem15);
         menu5.add(menuItem8);
         menu6.add(menuItem9);
         menu7.add(menuItem10);
@@ -282,28 +259,10 @@ public class truppenklicker extends JFrame implements ActionListener{
         menu8.add(menuItem13);
 
         clickerS.addActionListener(this);
-        Personal.addActionListener(this);
-        soldatenB.addActionListener(this);
-        Offizier.addActionListener(this);
-        Waffen.addActionListener(this);
-        G36C.addActionListener(this);
-        Fahrzeuge.addActionListener(this);
-        Panzer.addActionListener(this);
-        Flugzeuge.addActionListener(this);
-        P3C.addActionListener(this);
-        Marine.addActionListener(this);
-        Hamburg.addActionListener(this);
-        speichern.addActionListener(this);
-        laden.addActionListener(this);
         speicherja.addActionListener(this);
         speichernein.addActionListener(this);
-        Panzerwagen.addActionListener(this);
-        Panzerfaust.addActionListener(this);
-        Krieg.addActionListener(this);
         angriff.addActionListener(this);
         newrandom.addActionListener(this);
-        Personalgeb.addActionListener(this);
-        kasernenbutton.addActionListener(this);
         ja.addActionListener(this);
         nein.addActionListener(this);
         menuItem.addActionListener(this);
@@ -320,6 +279,7 @@ public class truppenklicker extends JFrame implements ActionListener{
         menuItem12.addActionListener(this);
         menuItem13.addActionListener(this);
         menuItem14.addActionListener(this);
+        menuItem15.addActionListener(this);
         this.add(outer);
 
         nested.add(clicks);
@@ -328,6 +288,7 @@ public class truppenklicker extends JFrame implements ActionListener{
         nested.add(G36Clabel);
         nested.add(panzerlabel);
         nested.add(P3Clabel);
+        nested.add(Eufilabel);
         nested.add(hamburglabel);
         nested.add(Panzerwagenlabel);
         nested.add(Panzerfaustlabel);
@@ -506,6 +467,23 @@ public class truppenklicker extends JFrame implements ActionListener{
 
             }
         }
+        if (ae.getSource() == this.menuItem15) {
+            if (clicksAm >= 1500000) {
+                clicksAm = clicksAm - 1500000;
+                eufid = eufid + 1;
+                Eufilabel.setText("Eurofighter: " + String.valueOf(eufid) + "  ");
+                clicks.setText("$: " + BigDecimal.valueOf(clicksAm).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");
+            } else {
+
+                JDialog error = new JDialog();
+                error.setTitle("Error");
+                error.setSize(180, 80);
+                error.setModal(true);
+                error.add(new JLabel("Nicht genügend Guthaben!"));
+                error.setVisible(true);
+
+            }
+        }
         if (ae.getSource() == this.menuItem8) {
             if (clicksAm >= 3000000) {
                 clicksAm = clicksAm - 3000000;
@@ -568,6 +546,7 @@ public class truppenklicker extends JFrame implements ActionListener{
             offiziere = 0;
             panzerd = 0;
             p3cs = 0; 
+            eufid = 0;
             hamburgd = 0;
             Panzerwagend = 0;
             Panzerfaustd = 0;
@@ -578,6 +557,7 @@ public class truppenklicker extends JFrame implements ActionListener{
             offizierlabel.setText("Offiziere: " + String.valueOf(offiziere) + "  ");
             panzerlabel.setText("Panzer: " + String.valueOf(panzerd) + "  ");
             P3Clabel.setText("P-3C Orion: " + String.valueOf(p3cs) + "  ");
+			Eufilabel.setText("Eurofighter: " + String.valueOf(eufid) + "  ");
             hamburglabel.setText("Fregatte H.: " + String.valueOf(hamburgd) + "  ");
             Panzerwagenlabel.setText("Panzerwagen: " + String.valueOf(Panzerwagend) + "  ");
             Panzerfaustlabel.setText("Panzerfäuste: " + String.valueOf(Panzerfaustd) + "   ");
@@ -615,6 +595,8 @@ public class truppenklicker extends JFrame implements ActionListener{
                 fw.write(String.valueOf(Panzerfaustd));
                 fw.newLine();
                 fw.write(String.valueOf(kasernen));
+                fw.newLine();
+                fw.write(String.valueOf(eufid));
                 fw.newLine();
                 fw.flush();
                 fw.close();
@@ -656,6 +638,8 @@ public class truppenklicker extends JFrame implements ActionListener{
                     fw.newLine();
                     fw.write(String.valueOf(kasernen));
                     fw.newLine();
+                    fw.write(String.valueOf(eufid));
+                    fw.newLine();
                     fw.flush();
                     fw.close();
                     A.setVisible(false);
@@ -670,6 +654,7 @@ public class truppenklicker extends JFrame implements ActionListener{
                 offiziere = 100;
                 panzerd = 1;
                 p3cs = 11; 
+                eufid = 12;
                 hamburgd = 1;
                 Panzerwagend = 100;
                 Panzerfaustd = 100;
@@ -714,12 +699,15 @@ public class truppenklicker extends JFrame implements ActionListener{
                         Panzerfaustd = Double.parseDouble(line);
                         line = reader.readLine();
                         kasernen = Double.parseDouble(line);
+                        line = reader.readLine();
+                        eufid = Double.parseDouble(line);
                         clicks.setText("$: " + BigDecimal.valueOf(clicksAm).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");
                         soldatenlabel.setText("Soldaten: " + String.valueOf(soldaten) + "  ");
                         G36Clabel.setText("G36C: " + String.valueOf(g36s) + "  ");
                         offizierlabel.setText("Offiziere: " + String.valueOf(offiziere) + "  ");
                         panzerlabel.setText("Panzer: " + String.valueOf(panzerd) + "  ");
                         P3Clabel.setText("P-3C Orion: " + String.valueOf(p3cs) + "  ");
+                        Eufilabel.setText("Eurofighter: " + String.valueOf(eufid) + "  ");
                         hamburglabel.setText("Fregatte H.: " + String.valueOf(hamburgd) + "  ");
                         Panzerwagenlabel.setText("Panzerwagen: " + String.valueOf(Panzerwagend) + "  ");
                         Panzerfaustlabel.setText("Panzerfäuste: " + String.valueOf(Panzerfaustd) + "   ");
@@ -752,10 +740,10 @@ public class truppenklicker extends JFrame implements ActionListener{
         timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    pps = (soldaten * 0.025) + (g36s * 0.08) + (offiziere * 0.1) + (panzerd * 1.65) + (p3cs * 1.795) + (hamburgd * 1.895) + (Panzerwagend * 1.35) + (Panzerfaustd * 0.095) + (kasernen * 0.025);
+                    pps = (soldaten * 0.025) + (g36s * 0.08) + (offiziere * 0.1) + (panzerd * 1.65) + (p3cs * 1.795)+ (eufid * 1.5) + (hamburgd * 1.895) + (Panzerwagend * 1.35) + (Panzerfaustd * 0.095) + (kasernen * 0.025);
                     clicksAm = clicksAm + pps;
                     clicks.setText("$: " + BigDecimal.valueOf(clicksAm).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");
-                    warpower = (soldaten / 10) + (g36s / 15) + (offiziere / 9) + (panzerd / 3) + (p3cs / 3) + (hamburgd / 1.5) + (Panzerwagend / 5) + (Panzerfaustd / 8);
+                    warpower = (soldaten / 10) + (g36s / 15) + (offiziere / 9) + (panzerd / 3) + (p3cs / 3) + (eufid / 2) + (hamburgd / 1.5) + (Panzerwagend / 5) + (Panzerfaustd / 8);
                     warpowerlabel.setText("Kriegskraft: " + BigDecimal.valueOf(warpower).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN));
 
                 }
@@ -777,6 +765,7 @@ public class truppenklicker extends JFrame implements ActionListener{
                     offizierlabel.setText("Offiziere: " + String.valueOf(offiziere) + "  ");
                     panzerlabel.setText("Panzer: " + String.valueOf(panzerd) + "  ");
                     P3Clabel.setText("P-3C Orion: " + String.valueOf(p3cs) + "  ");
+                    Eufilabel.setText("Eurofighter: " + String.valueOf(eufid) + "  ");
                     hamburglabel.setText("Fregatte H.: " + String.valueOf(hamburgd) + "  ");
                     Panzerwagenlabel.setText("Panzerwagen: " + String.valueOf(Panzerwagend) + "  ");
                     Panzerfaustlabel.setText("Panzerfäuste: " + String.valueOf(Panzerfaustd) + "   ");
@@ -1047,12 +1036,15 @@ public class truppenklicker extends JFrame implements ActionListener{
                 Panzerfaustd = Double.parseDouble(line);
                 line = reader.readLine();
                 kasernen = Double.parseDouble(line);
+                line = reader.readLine();
+                eufid = Double.parseDouble(line);
                 clicks.setText("$: " + BigDecimal.valueOf(clicksAm).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");
                 soldatenlabel.setText("Soldaten: " + String.valueOf(soldaten) + "  ");
                 G36Clabel.setText("G36C: " + String.valueOf(g36s) + "  ");
                 offizierlabel.setText("Offiziere: " + String.valueOf(offiziere) + "  ");
                 panzerlabel.setText("Panzer: " + String.valueOf(panzerd) + "  ");
                 P3Clabel.setText("P-3C Orion: " + String.valueOf(p3cs) + "  ");
+                Eufilabel.setText("Eurofighter: " + String.valueOf(eufid) + "  ");
                 hamburglabel.setText("Fregatte H.: " + String.valueOf(hamburgd) + "  ");
                 Panzerwagenlabel.setText("Panzerwagen: " + String.valueOf(Panzerwagend) + "  ");
                 Panzerfaustlabel.setText("Panzerfäuste: " + String.valueOf(Panzerfaustd) + "   ");
