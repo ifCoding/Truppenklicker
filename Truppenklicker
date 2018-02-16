@@ -49,6 +49,7 @@ public class truppenklicker extends JFrame implements ActionListener{
     double frankreichpower = 5;
     double nordkoreapower = 180;
     double kasernen = 0;
+    double actionPerSecond = 0;
 
     JPanel outer;
     JPanel nested;
@@ -79,6 +80,8 @@ public class truppenklicker extends JFrame implements ActionListener{
     JLabel warpowerlabel;
     JLabel krieglabel;
     JLabel kasernenlabel;
+    JLabel werbunglabel;
+    JLabel actionlabel;
 
     JButton clickerS;
     JButton Personal;
@@ -115,7 +118,7 @@ public class truppenklicker extends JFrame implements ActionListener{
 
     public truppenklicker()
     {
-        super("Truppenklicker");
+        super("Truppenklicker v.0.9.1");
         this.setSize(1820, 980);
         this.setVisible(true);
         outer = new JPanel(new BorderLayout());
@@ -127,6 +130,7 @@ public class truppenklicker extends JFrame implements ActionListener{
 
         timer();
         timer2();
+        cheatschutzTimer();
 
         clicks = new JLabel();
         clicks.setText("$: " + BigDecimal.valueOf(clicksAm).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");
@@ -166,6 +170,9 @@ public class truppenklicker extends JFrame implements ActionListener{
 
         kasernenlabel = new JLabel();
         kasernenlabel.setText("Kasernen: " + String.valueOf(kasernen) + "  ");
+        
+        actionlabel = new JLabel();
+        actionlabel.setText("Button-Clicks in dieser Sekunde: " + actionPerSecond);
 
         krieglabel = new JLabel();
 
@@ -295,6 +302,7 @@ public class truppenklicker extends JFrame implements ActionListener{
         nested.add(kasernenlabel);
 
         nested2.add(clickerS);
+        nested2.add(actionlabel);
         nested.add(warpowerlabel);
 
         nested3.add(Preise);
@@ -311,8 +319,34 @@ public class truppenklicker extends JFrame implements ActionListener{
         truppenklicker tl = new truppenklicker();
         tl.setVisible(true);
     }
-
+    
     public void actionPerformed (ActionEvent ae){
+        if(ae.getSource() == this.clickerS) {
+            actionPerSecond++;
+            actionlabel.setText("Button-Clicks in dieser Sekunde: " + actionPerSecond);
+            
+            if(actionPerSecond >= 10) {
+                JDialog cheaterror = new JDialog();
+                cheaterror.setTitle("Cheat-Schutz");
+                cheaterror.setSize(700, 80);
+                cheaterror.setModal(true);
+                cheaterror.add(new JLabel("Die Anzahl an Mausklicks pro Sekunde ist übernatürlich. Der Cheat Schutz ist aktiviert!"));
+                cheaterror.setVisible(true);
+                clicksAm = 0;
+                soldaten = 0;
+                pps = 0;
+                soldaten = 0;
+                offiziere = 0;
+                g36s = 0;
+                panzerd = 0;
+                p3cs = 0;
+                eufid = 0;
+                hamburgd = 0;
+                Panzerwagend = 0;
+                Panzerfaustd = 0;
+            }
+        }
+        
         if(ae.getSource() == this.clickerS){
             clicksAm++;
             clicks.setText("$: " + BigDecimal.valueOf(clicksAm).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");
@@ -557,7 +591,7 @@ public class truppenklicker extends JFrame implements ActionListener{
             offizierlabel.setText("Offiziere: " + String.valueOf(offiziere) + "  ");
             panzerlabel.setText("Panzer: " + String.valueOf(panzerd) + "  ");
             P3Clabel.setText("P-3C Orion: " + String.valueOf(p3cs) + "  ");
-			Eufilabel.setText("Eurofighter: " + String.valueOf(eufid) + "  ");
+            Eufilabel.setText("Eurofighter: " + String.valueOf(eufid) + "  ");
             hamburglabel.setText("Fregatte H.: " + String.valueOf(hamburgd) + "  ");
             Panzerwagenlabel.setText("Panzerwagen: " + String.valueOf(Panzerwagend) + "  ");
             Panzerfaustlabel.setText("Panzerfäuste: " + String.valueOf(Panzerfaustd) + "   ");
@@ -773,6 +807,36 @@ public class truppenklicker extends JFrame implements ActionListener{
 
                 }
             }, 10000, 10000);
+
+        return 0;
+
+    }
+    
+    public double cheatschutzTimer(){
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    actionPerSecond = 0;
+                    actionlabel.setText("Button-Clicks in dieser Sekunde: " + actionPerSecond);
+
+                }
+            }, 1000, 1000);
+
+        return 0;
+
+    }
+    
+    public double durchschnittsTimer(){
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    
+                    
+
+                }
+            }, 1000, 1000);
 
         return 0;
 
