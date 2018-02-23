@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.event.DocumentListener;
 
 public class truppenklicker extends JFrame implements ActionListener{
     int yourScale = 2;
@@ -65,6 +66,9 @@ public class truppenklicker extends JFrame implements ActionListener{
     JPanel save;
     JPanel kriego;
     JPanel persongeb;
+    JPanel profil;
+    JPanel profilinner;
+    JPanel profilouter;
 
     JLabel clicks;
     JLabel soldatenlabel;
@@ -79,6 +83,8 @@ public class truppenklicker extends JFrame implements ActionListener{
     JLabel warpowerlabel;
     JLabel krieglabel;
     JLabel kasernenlabel;
+    JLabel imagelabel;
+    JLabel Profillabel;
 
     JButton clickerS;
     JButton Personal;
@@ -111,11 +117,11 @@ public class truppenklicker extends JFrame implements ActionListener{
 
     JMenuBar menuBar;
     JMenu menu, menu2, menu3, menu4, menu5, menu6, menu7, menu8;
-    JMenuItem menuItem, menuItem1, menuItem2, menuItem3, menuItem4, menuItem5, menuItem6, menuItem7, menuItem8, menuItem9, menuItem10, menuItem11, menuItem12, menuItem14;
+    JMenuItem menuItem, menuItem1, menuItem2, menuItem3, menuItem4, menuItem5, menuItem6, menuItem7, menuItem8, menuItem9, menuItem10, menuItem11, menuItem12, menuItem14, menuItem15;
     JCheckBoxMenuItem menuItem13;
-    
+
     JComboBox angriffauswahl;
-    
+
     JTextField mengeEingeben;
 
     public truppenklicker()
@@ -168,6 +174,9 @@ public class truppenklicker extends JFrame implements ActionListener{
 
         kasernenlabel = new JLabel();
         kasernenlabel.setText("Kasernen: " + String.valueOf(kasernen) + "  ");
+        
+        Profillabel = new JLabel();
+        Profillabel.setText("Gefreiter");
 
         krieglabel = new JLabel();
 
@@ -224,7 +233,7 @@ public class truppenklicker extends JFrame implements ActionListener{
         speichernein = new JButton("Nein");
         speichernein.setVisible(true);
         speichernein.setPreferredSize(new Dimension(80, 30));
-        
+
         ok = new JButton("Ok");
         ok.setVisible(true);
         ok.setPreferredSize(new Dimension(80, 30));
@@ -275,6 +284,7 @@ public class truppenklicker extends JFrame implements ActionListener{
         menuItem12 = new JMenuItem("Laden");
         menuItem13 = new JCheckBoxMenuItem("Debug/Cheatmode");
         menuItem14 = new JMenuItem("Zurücksetzen");
+        menuItem15 = new JMenuItem("Profil");
 
         menu.add(menuItem);
         menu.add(menuItem2);
@@ -289,6 +299,7 @@ public class truppenklicker extends JFrame implements ActionListener{
         menu8.add(menuItem11);
         menu8.add(menuItem12);
         menu8.add(menuItem14);
+        menu8.add(menuItem15);
         menu8.addSeparator();
         menu8.add(menuItem13);
 
@@ -332,6 +343,7 @@ public class truppenklicker extends JFrame implements ActionListener{
         menuItem12.addActionListener(this);
         menuItem13.addActionListener(this);
         menuItem14.addActionListener(this);
+        menuItem15.addActionListener(this);
         this.add(outer);
 
         nested.add(clicks);
@@ -355,16 +367,17 @@ public class truppenklicker extends JFrame implements ActionListener{
         outer.add(nested3, BorderLayout.PAGE_END);
         outer.add(menuBar, BorderLayout.PAGE_START);
         outer.add(top, BorderLayout.CENTER);
-        
+
         String[] objektwahl = {"Soldaten", "Panzer", "Panzerwagen", "Fregatte H.", "P-3C" };
-        
+
         JComboBox angriffauswahl = new JComboBox(objektwahl);
+
     }
 
     public static void main(String[] args) {
         truppenklicker tl = new truppenklicker();
         tl.setVisible(true);
-        
+
     }
 
     public void actionPerformed (ActionEvent ae){
@@ -575,6 +588,21 @@ public class truppenklicker extends JFrame implements ActionListener{
             save.setVisible(true);
             A.setVisible(true);
         }
+        if(ae.getSource() == this.menuItem15) {
+            ImageIcon image = new ImageIcon("dienstgrad.png");
+            JLabel imagelabel = new JLabel(image);
+            JFrame Z = new JFrame();
+            Z.setTitle("Profil");
+            Z.setSize(800,600);
+            profil = new JPanel();
+            profilinner = new JPanel();
+            Z.add(profil);
+            profilinner.add(imagelabel);
+            profil.add(profilinner, BorderLayout.PAGE_START);
+            profil.add(Profillabel, BorderLayout.PAGE_END);
+            profil.setVisible(true);
+            Z.setVisible(true);
+        }
         if (ae.getSource() == this.ja) {
             A.setVisible(false);
             A.dispose();
@@ -645,10 +673,8 @@ public class truppenklicker extends JFrame implements ActionListener{
         if (ae.getSource() == this.menuItem12) {
             ladeDatei();
         }
-        
+
         if (ae.getSource() == this.ok) {
-            String menge = mengeEingeben.getText();
-            int menge1 = Integer.parseInt(menge); 
         }
 
         if (ae.getSource() == this.menuItem13) {
@@ -807,6 +833,10 @@ public class truppenklicker extends JFrame implements ActionListener{
             }, 10000, 10000);
 
         return 0;
+
+    }
+
+    public void test(){
 
     }
 
@@ -1038,7 +1068,7 @@ public class truppenklicker extends JFrame implements ActionListener{
             }
         }   
     }
-    
+
     public void neuerangriff(){
         JFrame Z = new JFrame();
         Z.setTitle("In den Krieg ziehen");
