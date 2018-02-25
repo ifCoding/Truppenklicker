@@ -26,6 +26,7 @@ public class truppenklicker extends JFrame implements ActionListener{
     int yourScale = 2;
     int ppsScale = 3;
 
+    double wehrsoldset = 0;
     double clicksAm = 0;
     String clicksAm2 = String.valueOf(clicksAm);
     double soldaten = 0;
@@ -53,6 +54,7 @@ public class truppenklicker extends JFrame implements ActionListener{
     double dienstgrad = 1;
     String menge;
     int menge1;
+    double wehrsold = 1;
 
     JPanel outer;
     JPanel nested;
@@ -385,7 +387,7 @@ public class truppenklicker extends JFrame implements ActionListener{
 
     public void actionPerformed (ActionEvent ae){
         if(ae.getSource() == this.clickerS){
-            clicksAm++;
+            clicksAm = clicksAm = clicksAm + wehrsold;
             clicks.setText("$: " + BigDecimal.valueOf(clicksAm).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");
         }
         JFrame A = new JFrame();
@@ -949,43 +951,111 @@ public class truppenklicker extends JFrame implements ActionListener{
         timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    dienstgradpunkte = dienstgradpunkte + 10;
-                    dienstgradpunkte = dienstgradpunkte + ((soldaten + g36s + offiziere + panzerd + p3cs + hamburgd + Panzerwagend + Panzerfaustd) * 0.25);
+                    dienstgradpunkte = dienstgradpunkte + 5;
+                    dienstgradpunkte = dienstgradpunkte + ((soldaten + g36s + offiziere + panzerd + p3cs + hamburgd + Panzerwagend + Panzerfaustd) * 0.2);
 
                     if (dienstgradpunkte > 110 && dienstgradpunkte < 400) {
                         dienstgrad = 2;
+                        if (wehrsoldset == 0) {
+                            wehrsold = wehrsold + 0.5;
+                        }
+                        wehrsoldset = 0.1;
                     }else if (dienstgradpunkte > 400 && dienstgradpunkte < 900) {
                         dienstgrad = 3;
+                        if (wehrsoldset == 0.1) {
+                            wehrsold = wehrsold + 0.5;
+                        }
+                        wehrsoldset = 0.2;
                     }else if (dienstgradpunkte > 900 && dienstgradpunkte < 1400) {
                         dienstgrad = 4;
+                        if (wehrsoldset == 0.2) {
+                            wehrsold = wehrsold + 0.5;
+                        }
+                        wehrsoldset = 0.3;
                     }else if (dienstgradpunkte > 1400 && dienstgradpunkte < 2000) {
                         dienstgrad = 5;
+                        if (wehrsoldset == 0.4) {
+                            wehrsold = wehrsold + 0.5;
+                        }
+                        wehrsoldset = 0.5;
                     }else if (dienstgradpunkte > 2000 && dienstgradpunkte < 2900) {
                         dienstgrad = 6;
+                        if (wehrsoldset == 0.5) {
+                            wehrsold = wehrsold + 0.5;
+                        }
+                        wehrsoldset = 0.6;
                     }else if (dienstgradpunkte > 2900 && dienstgradpunkte < 3800) {
                         dienstgrad = 7;
+                        if (wehrsoldset == 0.6) {
+                            wehrsold = wehrsold + 0.5;
+                        }
+                        wehrsoldset = 0.7;
                     }else if (dienstgradpunkte > 3800 && dienstgradpunkte < 4800) {
                         dienstgrad = 8;
+                        if (wehrsoldset == 0.7) {
+                            wehrsold = wehrsold + 0.5;
+                        }
+                        wehrsoldset = 0.8;
                     }else if (dienstgradpunkte > 4800 && dienstgradpunkte < 5900) {
                         dienstgrad = 9;
+                        if (wehrsoldset == 0.8) {
+                            wehrsold = wehrsold + 0.5;
+                        }
+                        wehrsoldset = 0.9;
                     }else if (dienstgradpunkte > 5900 && dienstgradpunkte < 7000) {
                         dienstgrad = 10;
+                        if (wehrsoldset == 0.9) {
+                            wehrsold = wehrsold + 0.5;
+                        }
+                        wehrsoldset = 0.10;
                     }else if (dienstgradpunkte > 7000 && dienstgradpunkte < 8900) {
                         dienstgrad = 11;
+                        if (wehrsoldset == 0.10) {
+                            wehrsold = wehrsold + 0.5;
+                        }
+                        wehrsoldset = 0.11;
                     }else if (dienstgradpunkte > 8900 && dienstgradpunkte < 10000) {
                         dienstgrad = 12;
+                        if (wehrsoldset == 0.11) {
+                            wehrsold = wehrsold + 0.5;
+                        }
+                        wehrsoldset = 0.12;
                     }else if (dienstgradpunkte > 10000 && dienstgradpunkte < 12000) {
                         dienstgrad = 13;
+                        if (wehrsoldset == 0.12) {
+                            wehrsold = wehrsold + 0.5;
+                        }
+                        wehrsoldset = 0.13;
                     }else if (dienstgradpunkte > 12000 && dienstgradpunkte < 14000) {
                         dienstgrad = 14;
+                        if (wehrsoldset == 0.13) {
+                            wehrsold = wehrsold + 0.5;
+                        }
+                        wehrsoldset = 0.14;
                     }else if (dienstgradpunkte > 14000 && dienstgradpunkte < 16000) {
                         dienstgrad = 15;
+                        if (wehrsoldset == 0.14) {
+                            wehrsold = wehrsold + 0.5;
+                        }
+                        wehrsoldset = 0.15;
                     }else if (dienstgradpunkte > 16000 && dienstgradpunkte < 18000) {
                         dienstgrad = 16;
+                        if (wehrsoldset == 0.15) {
+                            wehrsold = wehrsold + 0.5;
+                        }
+                        wehrsoldset = 0.16;
                     }else if (dienstgradpunkte > 18000 && dienstgradpunkte < 24000) {
                         dienstgrad = 17;
+                        if (wehrsoldset == 0.16) {
+                            wehrsold = wehrsold + 0.5;
+                        }
+                        wehrsoldset = 0.17;
                     }else if (dienstgradpunkte > 24000) {
                         dienstgrad = 18;
+                        if (wehrsoldset == 0.17) {
+                            wehrsold = wehrsold + 1.5;
+                        }
+                        wehrsoldset = 0.18;
                     }
                 }
             }, 10000, 10000);
