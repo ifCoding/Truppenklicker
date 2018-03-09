@@ -835,7 +835,8 @@ public class truppenklicker extends JFrame implements ActionListener{
                 hamburgd = 1;
                 Panzerwagend = 100;
                 Panzerfaustd = 100;
-                kasernen = 1;
+                kasernen = 10;
+                dienstgrad = 2;
                 clicks.setText("$: " + BigDecimal.valueOf(clicksAm).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");
                 soldatenlabel.setText("Soldaten: " + String.valueOf(soldaten) + "  ");
                 G36Clabel.setText("G36C: " + String.valueOf(g36s) + "  ");
