@@ -1,0 +1,1390 @@
+import java.awt.*;
+import java.awt.event.*;
+import java.awt.event.ActionListener;
+import javax.swing.ImageIcon;
+import javax.swing.*;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.*;
+import java.math.*;
+import java.text.*;
+import javax.swing.JDialog;
+import java.io.*;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.event.DocumentListener;
+
+public class truppenklicker extends JFrame implements ActionListener{
+    int yourScale = 2;
+    int ppsScale = 3;
+
+    double wehrsoldset = 0;
+    double clicksAm = 0;
+    String clicksAm2 = String.valueOf(clicksAm);
+    double soldaten = 0;
+    double pps = 0;
+    double offiziere = 0;
+    double g36s = 0;
+    double panzerd = 0;
+    double p3cs = 0;
+    double hamburgd = 0;
+    String clicksAm3;
+    String pps2;
+    double Panzerwagend = 0;
+    double Panzerfaustd = 0;
+    double warpower = 0;
+    double kriegsparteikraft;
+    int randomInt = 0;
+    double usapower = 450;
+    double ruspower = 460;
+    double polenpower = 210;
+    double turkenpower = 290;
+    double frankreichpower = 5;
+    double nordkoreapower = 180;
+    double kasernen = 0;
+    double dienstgradpunkte = 0;
+    double dienstgrad = 1;
+    String menge;
+    int menge1;
+    double wehrsold = 1;
+    String ausgewahlt;
+
+    JPanel outer;
+    JPanel nested;
+    JPanel nested2;
+    JPanel nested3;
+    JPanel top;
+
+    JPanel personalo;
+    JPanel waffeno;
+    JPanel fahrzeugo;
+    JPanel flugzeugo;
+    JPanel marino;
+    JPanel save;
+    JPanel kriego;
+    JPanel persongeb;
+    JPanel profil;
+    JPanel profilinner;
+    JPanel profilouter;
+
+    JLabel clicks;
+    JLabel soldatenlabel;
+    JLabel Preise;
+    JLabel offizierlabel;
+    JLabel G36Clabel;
+    JLabel panzerlabel;
+    JLabel P3Clabel;
+    JLabel hamburglabel;
+    JLabel Panzerwagenlabel;
+    JLabel Panzerfaustlabel;
+    JLabel warpowerlabel;
+    JLabel krieglabel;
+    JLabel kasernenlabel;
+    JLabel imagelabel;
+    JLabel Profillabel;
+    JLabel Testlabel;
+
+    JButton clickerS;
+    JButton Personal;
+    JButton Waffen;
+    JButton Fahrzeuge;
+    JButton Flugzeuge;
+    JButton Marine;
+    JButton Buildings;
+    JButton speichern;
+    JButton laden;
+    JButton speicherja;
+    JButton speichernein;
+    JButton Krieg;
+    JButton angriff;
+    JButton newrandom;
+    JButton kasernenbutton;
+    JButton ja;
+    JButton nein;
+    JButton ok;
+
+    JButton soldatenB;
+    JButton Offizier;
+    JButton G36C;
+    JButton Panzer;
+    JButton P3C;
+    JButton Hamburg;
+    JButton Panzerwagen;
+    JButton Panzerfaust;
+    JButton Personalgeb;
+
+    Object obj;
+
+    JMenuBar menuBar, AuswahlKrieg;
+    JMenu menu, menu2, menu3, menu4, menu5, menu6, menu7, menu8;
+    JMenuItem menuItem, menuItem1, menuItem2, menuItem3, menuItem4, menuItem5, menuItem6, menuItem7, menuItem8, menuItem9, menuItem10, menuItem11, menuItem12, menuItem14, menuItem15, Soldat;
+    JCheckBoxMenuItem menuItem13;
+
+    JTextField mengeEingeben;
+
+    String[] objektwahl = {"Soldaten", "Panzer", "Panzerwagen", "Fregatte H.", "P-3C" };
+    JComboBox angriffauswahl = new JComboBox(objektwahl);
+
+    public truppenklicker()
+    {
+        super("Truppenklicker");
+        this.setSize(1820, 980);
+        this.setVisible(true);
+        outer = new JPanel(new BorderLayout());
+        nested = new JPanel();
+        nested2 = new JPanel();
+        nested3 = new JPanel();
+        top = new JPanel();
+        setLocationRelativeTo(null);
+
+        angriffauswahl.setSelectedItem(Soldat);
+        Object obj = angriffauswahl.getSelectedItem();
+
+        timer();
+        timer2();
+        timer3();
+
+        clicks = new JLabel();
+        clicks.setText("$: " + BigDecimal.valueOf(clicksAm).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");
+
+        soldatenlabel = new JLabel();
+        soldatenlabel.setText("Soldaten: " + String.valueOf(soldaten) + "  ");
+
+        Preise = new JLabel();
+        Preise.setText("Preisübersicht: Soldat [30$]   G36C [500$]   Panzerfaust [850$]   Offizier [1.000$]   Panzerwagen [25.000$]   Panzer [250.000$]   P-3C Orion [2.500.000$]   Fregatte Hamburg [3.000.000$]   Kaserne [10.000.000$]   ");
+
+        warpowerlabel = new JLabel();
+        warpowerlabel.setText("Kriegskraft: " + BigDecimal.valueOf(warpower).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN));
+
+        G36Clabel = new JLabel();
+        G36Clabel.setText("G36C: " + String.valueOf(g36s) + "  ");
+
+        offizierlabel = new JLabel();
+        offizierlabel.setText("Offiziere: " + String.valueOf(offiziere) + "  ");
+
+        panzerlabel = new JLabel();
+        panzerlabel.setText("Panzer: " + String.valueOf(panzerd) + "  ");
+
+        P3Clabel = new JLabel();
+        P3Clabel.setText("P-3C Orion: " + String.valueOf(p3cs) + "  ");
+
+        hamburglabel = new JLabel();
+        hamburglabel.setText("Fregatte H.: " + String.valueOf(hamburgd) + "  ");
+
+        Panzerwagenlabel = new JLabel();
+        Panzerwagenlabel.setText("Panzerwagen: " + String.valueOf(Panzerwagend) + "  ");
+
+        Panzerfaustlabel = new JLabel();
+        Panzerfaustlabel.setText("Panzerfäuste: " + String.valueOf(Panzerfaustd) + "   ");
+
+        kasernenlabel = new JLabel();
+        kasernenlabel.setText("Kasernen: " + String.valueOf(kasernen) + "  ");
+
+        Profillabel = new JLabel();
+        Profillabel.setText("Gefreiter");
+
+        krieglabel = new JLabel();
+
+        Testlabel = new JLabel();
+
+        clickerS = new JButton("Klick!");
+        clickerS.setPreferredSize(new Dimension(80, 30));
+        Personal = new JButton("Personal");
+        Personalgeb = new JButton("Personalgebäude");
+        Waffen = new JButton("Waffen");
+        Fahrzeuge = new JButton("Fahrzeuge");
+        Flugzeuge = new JButton("Flugzeuge");
+        Marine = new JButton("Marine");
+        speichern = new JButton("Speichern");
+        laden = new JButton("Laden");
+        Krieg = new JButton("Krieg");
+        ja = new JButton("Ja");
+        nein = new JButton("Nein");
+
+        soldatenB = new JButton("Soldat");
+        soldatenB.setVisible(true);
+        soldatenB.setPreferredSize(new Dimension(80, 30));
+
+        Offizier = new JButton("Offizier");
+        Offizier.setVisible(true);
+        Offizier.setPreferredSize(new Dimension(80, 30));
+
+        G36C = new JButton("G36C");
+        G36C.setVisible(true);
+        G36C.setPreferredSize(new Dimension(80, 30));
+
+        Panzer = new JButton("Panzer");
+        Panzer.setVisible(true);
+        Panzer.setPreferredSize(new Dimension(80, 30));
+
+        P3C = new JButton("P-3C Orion");
+        P3C.setVisible(true);
+        P3C.setPreferredSize(new Dimension(100, 30));
+
+        Hamburg = new JButton("Fregatte Hamburg");
+        Hamburg.setVisible(true);
+        Hamburg.setPreferredSize(new Dimension(140, 30));
+
+        Panzerwagen = new JButton("Panzerwagen");
+        Panzerwagen.setVisible(true);
+        Panzerwagen.setPreferredSize(new Dimension(140, 30));
+
+        Panzerfaust = new JButton("Panzerfaust");
+        Panzerfaust.setVisible(true);
+        Panzerfaust.setPreferredSize(new Dimension(140, 30));
+
+        speicherja = new JButton("Ja");
+        speicherja.setVisible(true);
+        speicherja.setPreferredSize(new Dimension(80, 30));
+
+        speichernein = new JButton("Nein");
+        speichernein.setVisible(true);
+        speichernein.setPreferredSize(new Dimension(80, 30));
+
+        ok = new JButton("Ok");
+        ok.setVisible(true);
+        ok.setPreferredSize(new Dimension(80, 30));
+
+        angriff = new JButton("Angriff!");
+        angriff.setVisible(true);
+        angriff.setPreferredSize(new Dimension(80, 30));
+
+        newrandom = new JButton("Neuer Gegner");
+        newrandom.setVisible(true);
+        newrandom.setPreferredSize(new Dimension(120, 30));
+
+        kasernenbutton = new JButton("Kaserne");
+        kasernenbutton.setVisible(true);
+        kasernenbutton.setPreferredSize(new Dimension(120, 30));
+
+        menuBar = new JMenuBar();
+
+        menu = new JMenu("Personal");
+        menu2 = new JMenu("Waffen");
+        menu3 = new JMenu("Fahrzeuge");
+        menu4 = new JMenu("Flugzeuge");
+        menu5 = new JMenu("Marine");
+        menu6 = new JMenu("Personalgebäude");
+        menu7 = new JMenu("Krieg");
+        menu8 = new JMenu("Einstellungen");
+
+        menuBar.add(menu);
+        menuBar.add(menu2);
+        menuBar.add(menu3);
+        menuBar.add(menu4);
+        menuBar.add(menu5);
+        menuBar.add(menu6);
+        menuBar.add(menu7);
+        menuBar.add(menu8);
+
+        menuItem = new JMenuItem("Soldaten");
+        menuItem2 = new JMenuItem("Offiziere");
+        menuItem3 = new JMenuItem("G36C");
+        menuItem4 = new JMenuItem("Panzerfaust");
+        menuItem5 = new JMenuItem("Panzer");
+        menuItem6 = new JMenuItem("Panzerwagen");
+        menuItem7 = new JMenuItem("P-3C Orion");
+        menuItem8 = new JMenuItem("Fregatte Hamburg");
+        menuItem9 = new JMenuItem("Kasernen");
+        menuItem10 = new JMenuItem("Kriegsübersicht");
+        menuItem11 = new JMenuItem("Speichern");
+        menuItem12 = new JMenuItem("Laden");
+        menuItem13 = new JCheckBoxMenuItem("Debug/Cheatmode");
+        menuItem14 = new JMenuItem("Zurücksetzen");
+        menuItem15 = new JMenuItem("Profil");
+
+        menu.add(menuItem);
+        menu.add(menuItem2);
+        menu2.add(menuItem3);
+        menu2.add(menuItem4);
+        menu3.add(menuItem5);
+        menu3.add(menuItem6);
+        menu4.add(menuItem7);
+        menu5.add(menuItem8);
+        menu6.add(menuItem9);
+        menu7.add(menuItem10);
+        menu8.add(menuItem11);
+        menu8.add(menuItem12);
+        menu8.add(menuItem14);
+        menu8.add(menuItem15);
+        menu8.addSeparator();
+        menu8.add(menuItem13);
+
+        clickerS.addActionListener(this);
+        Personal.addActionListener(this);
+        soldatenB.addActionListener(this);
+        Offizier.addActionListener(this);
+        Waffen.addActionListener(this);
+        G36C.addActionListener(this);
+        Fahrzeuge.addActionListener(this);
+        Panzer.addActionListener(this);
+        Flugzeuge.addActionListener(this);
+        P3C.addActionListener(this);
+        Marine.addActionListener(this);
+        Hamburg.addActionListener(this);
+        speichern.addActionListener(this);
+        laden.addActionListener(this);
+        speicherja.addActionListener(this);
+        speichernein.addActionListener(this);
+        Panzerwagen.addActionListener(this);
+        Panzerfaust.addActionListener(this);
+        Krieg.addActionListener(this);
+        angriff.addActionListener(this);
+        newrandom.addActionListener(this);
+        Personalgeb.addActionListener(this);
+        kasernenbutton.addActionListener(this);
+        ja.addActionListener(this);
+        nein.addActionListener(this);
+        ok.addActionListener(this);
+        menuItem.addActionListener(this);
+        menuItem2.addActionListener(this);
+        menuItem3.addActionListener(this);
+        menuItem4.addActionListener(this);
+        menuItem5.addActionListener(this);
+        menuItem6.addActionListener(this);
+        menuItem7.addActionListener(this);
+        menuItem8.addActionListener(this);
+        menuItem9.addActionListener(this);
+        menuItem10.addActionListener(this);
+        menuItem11.addActionListener(this);
+        menuItem12.addActionListener(this);
+        menuItem13.addActionListener(this);
+        menuItem14.addActionListener(this);
+        menuItem15.addActionListener(this);
+        this.add(outer);
+
+        nested.add(clicks);
+        nested.add(soldatenlabel);
+        nested.add(offizierlabel);
+        nested.add(G36Clabel);
+        nested.add(panzerlabel);
+        nested.add(P3Clabel);
+        nested.add(hamburglabel);
+        nested.add(Panzerwagenlabel);
+        nested.add(Panzerfaustlabel);
+        nested.add(kasernenlabel);
+
+        nested2.add(clickerS);
+        nested.add(warpowerlabel);
+
+        nested3.add(Preise);
+
+        top.add(nested2, BorderLayout.PAGE_START);
+        top.add(nested, BorderLayout.CENTER);
+        outer.add(nested3, BorderLayout.PAGE_END);
+        outer.add(menuBar, BorderLayout.PAGE_START);
+        outer.add(top, BorderLayout.CENTER);
+
+    }
+
+    public static void main(String[] args) {
+        truppenklicker tl = new truppenklicker();
+        tl.setVisible(true);
+
+    }
+
+    public void actionPerformed (ActionEvent ae){
+        if(ae.getSource() == this.clickerS){
+            clicksAm = clicksAm = clicksAm + wehrsold;
+            clicks.setText("$: " + BigDecimal.valueOf(clicksAm).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");
+        }
+        JFrame A = new JFrame();
+
+        if (ae.getSource() == this.menuItem) {
+            if(clicksAm >= 30) {
+                clicksAm = clicksAm - 30;
+                soldaten = soldaten + 1;
+                soldatenlabel.setText("Soldaten: " + String.valueOf(soldaten) + "  ");
+                pps = pps + 0.025;
+                clicks.setText("$: " + BigDecimal.valueOf(clicksAm).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");
+            } else {
+
+                JDialog error = new JDialog();
+                error.setTitle("Error");
+                error.setSize(180, 80);
+                error.setModal(true);
+                error.add(new JLabel("Nicht genügend Guthaben!"));
+                error.setVisible(true);
+
+            }
+        }
+        if (ae.getSource() == this.menuItem9) {
+            if(clicksAm >= 10000000) {
+                clicksAm = clicksAm - 10000000;
+                kasernen = kasernen + 1;
+                kasernenlabel.setText("Kasernen: " + String.valueOf(kasernen) + "  ");
+                clicks.setText("$: " + BigDecimal.valueOf(clicksAm).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");
+            } else {
+
+                JDialog error = new JDialog();
+                error.setTitle("Error");
+                error.setSize(180, 80);
+                error.setModal(true);
+                error.add(new JLabel("Nicht genügend Guthaben!"));
+                error.setVisible(true);
+
+            }
+        }
+
+        if (ae.getSource() == this.menuItem2) {
+            if (clicksAm >= 1000) {
+                clicksAm = clicksAm - 1000;
+                offiziere = offiziere + 1;
+                offizierlabel.setText("Offiziere: " + String.valueOf(offiziere) + "  ");
+                pps = pps + 0.1;
+                clicks.setText("$: " + BigDecimal.valueOf(clicksAm).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");
+            } else {
+
+                JDialog error = new JDialog();
+                error.setTitle("Error");
+                error.setSize(180, 80);
+                error.setModal(true);
+                error.add(new JLabel("Nicht genügend Guthaben!"));
+                error.setVisible(true);
+
+            }
+        }
+
+        if (ae.getSource() == this.menuItem3) {
+            if (clicksAm >= 500) {
+                clicksAm = clicksAm - 500;
+                g36s = g36s + 1;
+                G36Clabel.setText("G36C: " + String.valueOf(g36s) + "  ");
+                pps = pps + 0.08;
+                clicks.setText("$: " + BigDecimal.valueOf(clicksAm).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");
+            } else {
+
+                JDialog error = new JDialog();
+                error.setTitle("Error");
+                error.setSize(180, 80);
+                error.setModal(true);
+                error.add(new JLabel("Nicht genügend Guthaben!"));
+                error.setVisible(true);
+
+            }
+        }
+
+        if (ae.getSource() == this.menuItem4) {
+            if (clicksAm >= 850) {
+                clicksAm = clicksAm - 850;
+                Panzerfaustd = Panzerfaustd + 1;
+                Panzerfaustlabel.setText("Panzerfäuste: " + String.valueOf(Panzerfaustd) + "   ");
+                pps = pps + 0.095;
+                clicks.setText("$: " + BigDecimal.valueOf(clicksAm).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");
+            } else {
+
+                JDialog error = new JDialog();
+                error.setTitle("Error");
+                error.setSize(180, 80);
+                error.setModal(true);
+                error.add(new JLabel("Nicht genügend Guthaben!"));
+                error.setVisible(true);
+
+            }
+        }
+
+        if (ae.getSource() == this.menuItem5) {
+            if (clicksAm >= 250000) {
+                clicksAm = clicksAm - 250000;
+                panzerd = panzerd + 1;
+                panzerlabel.setText("Panzer: " + String.valueOf(panzerd) + "  ");
+                pps = pps + 0.165;
+                clicks.setText("$: " + BigDecimal.valueOf(clicksAm).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");
+            } else {
+
+                JDialog error = new JDialog();
+                error.setTitle("Error");
+                error.setSize(180, 80);
+                error.setModal(true);
+                error.add(new JLabel("Nicht genügend Guthaben!"));
+                error.setVisible(true);
+
+            }
+        }
+
+        if (ae.getSource() == this.menuItem6) {
+            if (clicksAm >= 25000) {
+                clicksAm = clicksAm - 25000;
+                Panzerwagend = Panzerwagend + 1;
+                Panzerwagenlabel.setText("Panzerwagen: " + String.valueOf(Panzerwagend) + "  ");
+                pps = pps + 1.35;
+                clicks.setText("$: " + BigDecimal.valueOf(clicksAm).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");
+            } else {
+
+                JDialog error = new JDialog();
+                error.setTitle("Error");
+                error.setSize(180, 80);
+                error.setModal(true);
+                error.add(new JLabel("Nicht genügend Guthaben!"));
+                error.setVisible(true);
+
+            }
+        }
+        if (ae.getSource() == this.menuItem7) {
+            if (clicksAm >= 2500000) {
+                clicksAm = clicksAm - 2500000;
+                p3cs = p3cs + 1;
+                P3Clabel.setText("P-3C Orion: " + String.valueOf(p3cs) + "  ");
+                pps = pps + 1.795;
+                clicks.setText("$: " + BigDecimal.valueOf(clicksAm).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");
+            } else {
+
+                JDialog error = new JDialog();
+                error.setTitle("Error");
+                error.setSize(180, 80);
+                error.setModal(true);
+                error.add(new JLabel("Nicht genügend Guthaben!"));
+                error.setVisible(true);
+
+            }
+        }
+        if (ae.getSource() == this.menuItem8) {
+            if (clicksAm >= 3000000) {
+                clicksAm = clicksAm - 3000000;
+                hamburgd = hamburgd + 1;
+                hamburglabel.setText("Fregatte H.: " + String.valueOf(hamburgd) + "  ");
+                pps = pps + 1.895;
+                clicks.setText("$: " + BigDecimal.valueOf(clicksAm).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");
+            } else {
+
+                JDialog error = new JDialog();
+                error.setTitle("Error");
+                error.setSize(180, 80);
+                error.setModal(true);
+                error.add(new JLabel("Nicht genügend Guthaben!"));
+                error.setVisible(true);
+
+            }
+        }
+
+        if(ae.getSource() == this.menuItem10) {
+            kriegrechner();
+        }
+
+        if(ae.getSource() == this.newrandom) {
+            kriegrechnernewrandom();
+        }
+
+        if(ae.getSource() == this.angriff) {
+            neuerangriff();
+        }
+
+        if (ae.getSource() == this.menuItem11) {
+            A.setTitle("Speichern");
+            A.setSize(600,300);
+            save = new JPanel();
+            A.add(save);
+            save.add(new JLabel("Wirklich speichern?"));    
+            save.add(speicherja);
+            save.add(speichernein);
+            save.setVisible(true);
+            A.setVisible(true);
+        }
+        if(ae.getSource() == this.menuItem14) {
+            A.setTitle("Zurücksetzen");
+            A.setSize(300,150);
+            save = new JPanel();
+            A.add(save);
+            save.add(new JLabel("Wirklich zurücksetzen?"));    
+            save.add(ja);
+            save.add(nein);
+            save.setVisible(true);
+            A.setVisible(true);
+        }
+        if(ae.getSource() == this.menuItem15) {
+            profilinner = new JPanel();
+            profilinner.setVisible(false);
+            if (dienstgrad == 1) {
+                ImageIcon image = new ImageIcon("pics/gefreiter.png");
+                JLabel imagelabel = new JLabel(image);
+                profilinner.add(imagelabel);
+                Profillabel.setText("Gefreiter");
+            }else if (dienstgrad == 2) {
+                ImageIcon image = new ImageIcon("pics/Obergefreiter.png");
+                JLabel imagelabel = new JLabel(image);
+                profilinner.add(imagelabel);
+                Profillabel.setText("Obergefreiter");
+            }else if (dienstgrad == 3) {
+                ImageIcon image = new ImageIcon("pics/hauptgefreiter.png");
+                JLabel imagelabel = new JLabel(image);
+                profilinner.add(imagelabel);
+                Profillabel.setText("Hauptgefreiter");
+            }else if (dienstgrad == 4) {
+                ImageIcon image = new ImageIcon("pics/Stabsgefreiter.png");
+                JLabel imagelabel = new JLabel(image);
+                profilinner.add(imagelabel);
+                Profillabel.setText("Stabsgefreiter");
+            }else if (dienstgrad == 5) {
+                ImageIcon image = new ImageIcon("pics/oberstabsgefreiter.png");
+                JLabel imagelabel = new JLabel(image);
+                profilinner.add(imagelabel);
+                Profillabel.setText("Oberstabsgefreiter");
+            }else if (dienstgrad == 6) {
+                ImageIcon image = new ImageIcon("pics/unteroffizier.png");
+                JLabel imagelabel = new JLabel(image);
+                profilinner.add(imagelabel);
+                Profillabel.setText("Unteroffizier");
+            }else if (dienstgrad == 7) {
+                ImageIcon image = new ImageIcon("pics/Feldwebel.png");
+                JLabel imagelabel = new JLabel(image);
+                profilinner.add(imagelabel);
+                Profillabel.setText("Feldwebel");
+            }else if (dienstgrad == 8) {
+                ImageIcon image = new ImageIcon("pics/hauptfeldwebel.png");
+                JLabel imagelabel = new JLabel(image);
+                profilinner.add(imagelabel);
+                Profillabel.setText("Hauptfeldwebel");
+            }
+            else if (dienstgrad == 9) {
+                ImageIcon image = new ImageIcon("pics/oberstabsfeldwebel.png");
+                JLabel imagelabel = new JLabel(image);
+                profilinner.add(imagelabel);
+                Profillabel.setText("Oberstabsfeldwebel");
+            }else if (dienstgrad == 10) {
+                ImageIcon image = new ImageIcon("pics/Leutnant.png");
+                JLabel imagelabel = new JLabel(image);
+                profilinner.add(imagelabel);
+                Profillabel.setText("Leutnant");
+            }else if (dienstgrad == 11) {
+                ImageIcon image = new ImageIcon("pics/hauptmann.png");
+                JLabel imagelabel = new JLabel(image);
+                profilinner.add(imagelabel);
+                Profillabel.setText("Hauptmann");
+            }else if (dienstgrad == 12) {
+                ImageIcon image = new ImageIcon("pics/Major.png");
+                JLabel imagelabel = new JLabel(image);
+                profilinner.add(imagelabel);
+                Profillabel.setText("Major");
+            }else if (dienstgrad == 13) {
+                ImageIcon image = new ImageIcon("pics/Oberstleutnant.png");
+                JLabel imagelabel = new JLabel(image);
+                profilinner.add(imagelabel);
+                Profillabel.setText("Oberstleutnant");
+            }else if (dienstgrad == 14) {
+                ImageIcon image = new ImageIcon("pics/Oberst.png");
+                JLabel imagelabel = new JLabel(image);
+                profilinner.add(imagelabel);
+                Profillabel.setText("Oberst");
+            }else if (dienstgrad == 15) {
+                ImageIcon image = new ImageIcon("pics/hauptgefreiter.png");
+                JLabel imagelabel = new JLabel(image);
+                profilinner.add(imagelabel);
+                Profillabel.setText("Hauptgefreiter");
+            }else if (dienstgrad == 16) {
+                ImageIcon image = new ImageIcon("pics/Generalmajor.png");
+                JLabel imagelabel = new JLabel(image);
+                profilinner.add(imagelabel);
+                Profillabel.setText("Generalmajor");
+            }else if (dienstgrad == 17) {
+                ImageIcon image = new ImageIcon("pics/Generalleutnant.png");
+                JLabel imagelabel = new JLabel(image);
+                profilinner.add(imagelabel);
+                Profillabel.setText("Generalleutnant");
+            }else if (dienstgrad == 18) {
+                ImageIcon image = new ImageIcon("pics/General.png");
+                JLabel imagelabel = new JLabel(image);
+                profilinner.add(imagelabel);
+                Profillabel.setText("General");
+            }
+            JFrame Z = new JFrame();
+            Z.setTitle("Profil");
+            Z.setSize(800,600);
+            profil = new JPanel();
+            Z.add(profil);
+            profil.add(profilinner, BorderLayout.PAGE_START);
+            profil.add(Profillabel, BorderLayout.PAGE_END);
+            profilinner.setVisible(true);
+            profil.setVisible(true);
+            Z.setVisible(true);
+        }
+        if (ae.getSource() == this.ja) {
+            A.setVisible(false);
+            A.dispose();
+            clicksAm = 0;
+            soldaten = 0;
+            g36s = 0;
+            offiziere = 0;
+            panzerd = 0;
+            p3cs = 0; 
+            hamburgd = 0;
+            Panzerwagend = 0;
+            Panzerfaustd = 0;
+            kasernen = 0;
+            dienstgradpunkte = 0;
+            dienstgrad = 1;
+            clicks.setText("$: " + BigDecimal.valueOf(clicksAm).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");
+            soldatenlabel.setText("Soldaten: " + String.valueOf(soldaten) + "  ");
+            G36Clabel.setText("G36C: " + String.valueOf(g36s) + "  ");
+            offizierlabel.setText("Offiziere: " + String.valueOf(offiziere) + "  ");
+            panzerlabel.setText("Panzer: " + String.valueOf(panzerd) + "  ");
+            P3Clabel.setText("P-3C Orion: " + String.valueOf(p3cs) + "  ");
+            hamburglabel.setText("Fregatte H.: " + String.valueOf(hamburgd) + "  ");
+            Panzerwagenlabel.setText("Panzerwagen: " + String.valueOf(Panzerwagend) + "  ");
+            Panzerfaustlabel.setText("Panzerfäuste: " + String.valueOf(Panzerfaustd) + "   ");
+            kasernenlabel.setText("Kasernen: " + String.valueOf(kasernen) + "  ");
+        }
+        if (ae.getSource() == this.nein) {
+            A.setVisible(false);
+            A.dispose();
+        }
+        if (ae.getSource() == this.speichernein) {
+            A.setVisible(false);
+            A.dispose();
+        }
+        if (ae.getSource() == this.speicherja) {
+            try {
+                File newTextFile = new File("saves/savegame.txt");
+
+                BufferedWriter fw = new BufferedWriter(new FileWriter(newTextFile));
+                fw.write(String.valueOf(clicksAm));
+                fw.newLine();
+                fw.write(String.valueOf(soldaten));
+                fw.newLine();
+                fw.write(String.valueOf(g36s));
+                fw.newLine();
+                fw.write(String.valueOf(offiziere));
+                fw.newLine();
+                fw.write(String.valueOf(panzerd));
+                fw.newLine();
+                fw.write(String.valueOf(p3cs));
+                fw.newLine();
+                fw.write(String.valueOf(hamburgd));
+                fw.newLine();
+                fw.write(String.valueOf(Panzerwagend));
+                fw.newLine();
+                fw.write(String.valueOf(Panzerfaustd));
+                fw.newLine();
+                fw.write(String.valueOf(kasernen));
+                fw.newLine();
+                fw.write(String.valueOf(dienstgradpunkte));
+                fw.newLine();
+                fw.write(String.valueOf(dienstgrad));
+                fw.flush();
+                fw.close();
+                A.setVisible(false);
+                A.dispose(); 
+
+            } catch (IOException iox) {
+                iox.printStackTrace();
+            }
+        }
+
+        if (ae.getSource() == this.menuItem12) {
+            ladeDatei();
+        }
+
+        if (ae.getSource() == this.ok) {
+            String menge = mengeEingeben.getText();
+            Object obj = angriffauswahl.getSelectedItem();
+            if(obj == Soldat) {
+                Testlabel.setText(menge + "Soldat");
+            }
+        }
+
+        if (ae.getSource() == this.menuItem13) {
+            if (menuItem13.isSelected()) {
+                try {
+                    File newTextFile = new File("saves/savebeforecheat.txt");
+
+                    BufferedWriter fw = new BufferedWriter(new FileWriter(newTextFile));
+                    fw.write(String.valueOf(clicksAm));
+                    fw.newLine();
+                    fw.write(String.valueOf(soldaten));
+                    fw.newLine();
+                    fw.write(String.valueOf(g36s));
+                    fw.newLine();
+                    fw.write(String.valueOf(offiziere));
+                    fw.newLine();
+                    fw.write(String.valueOf(panzerd));
+                    fw.newLine();
+                    fw.write(String.valueOf(p3cs));
+                    fw.newLine();
+                    fw.write(String.valueOf(hamburgd));
+                    fw.newLine();
+                    fw.write(String.valueOf(Panzerwagend));
+                    fw.newLine();
+                    fw.write(String.valueOf(Panzerfaustd));
+                    fw.newLine();
+                    fw.write(String.valueOf(kasernen));
+                    fw.newLine();
+                    fw.write(String.valueOf(dienstgradpunkte));
+                    fw.newLine();
+                    fw.write(String.valueOf(dienstgrad));
+                    fw.flush();
+                    fw.close();
+                    A.setVisible(false);
+                    A.dispose(); 
+
+                } catch (IOException iox) {
+                    iox.printStackTrace();
+                }
+                clicksAm = 2020200000;
+                soldaten = 100;
+                g36s = 100;
+                offiziere = 100;
+                panzerd = 1;
+                p3cs = 11; 
+                hamburgd = 1;
+                Panzerwagend = 100;
+                Panzerfaustd = 100;
+                kasernen = 1;
+                clicks.setText("$: " + BigDecimal.valueOf(clicksAm).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");
+                soldatenlabel.setText("Soldaten: " + String.valueOf(soldaten) + "  ");
+                G36Clabel.setText("G36C: " + String.valueOf(g36s) + "  ");
+                offizierlabel.setText("Offiziere: " + String.valueOf(offiziere) + "  ");
+                panzerlabel.setText("Panzer: " + String.valueOf(panzerd) + "  ");
+                P3Clabel.setText("P-3C Orion: " + String.valueOf(p3cs) + "  ");
+                hamburglabel.setText("Fregatte H.: " + String.valueOf(hamburgd) + "  ");
+                Panzerwagenlabel.setText("Panzerwagen: " + String.valueOf(Panzerwagend) + "  ");
+                Panzerfaustlabel.setText("Panzerfäuste: " + String.valueOf(Panzerfaustd) + "   ");
+                kasernenlabel.setText("Kasernen: " + String.valueOf(kasernen) + "  ");
+            } else {
+
+                FileInputStream fis = null;
+                BufferedReader reader = null;
+
+                try {
+                    fis = new FileInputStream("saves/savebeforecheat.txt");
+                    reader = new BufferedReader(new InputStreamReader(fis));
+
+                    String line = reader.readLine();
+                    while(line != null){
+                        clicksAm = Double.parseDouble(line);
+                        line = reader.readLine();
+                        soldaten = Double.parseDouble(line);
+                        line = reader.readLine();
+                        g36s = Double.parseDouble(line);
+                        line = reader.readLine();
+                        offiziere = Double.parseDouble(line);
+                        line = reader.readLine();
+                        panzerd = Double.parseDouble(line);
+                        line = reader.readLine();
+                        p3cs = Double.parseDouble(line);
+                        line = reader.readLine();
+                        hamburgd = Double.parseDouble(line);
+                        line = reader.readLine();
+                        Panzerwagend = Double.parseDouble(line);
+                        line = reader.readLine();
+                        Panzerfaustd = Double.parseDouble(line);
+                        line = reader.readLine();
+                        kasernen = Double.parseDouble(line);
+                        line = reader.readLine();
+                        dienstgradpunkte = Double.parseDouble(line);
+                        line = reader.readLine();
+                        dienstgrad = Double.parseDouble(line);
+                        clicks.setText("$: " + BigDecimal.valueOf(clicksAm).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");
+                        soldatenlabel.setText("Soldaten: " + String.valueOf(soldaten) + "  ");
+                        G36Clabel.setText("G36C: " + String.valueOf(g36s) + "  ");
+                        offizierlabel.setText("Offiziere: " + String.valueOf(offiziere) + "  ");
+                        panzerlabel.setText("Panzer: " + String.valueOf(panzerd) + "  ");
+                        P3Clabel.setText("P-3C Orion: " + String.valueOf(p3cs) + "  ");
+                        hamburglabel.setText("Fregatte H.: " + String.valueOf(hamburgd) + "  ");
+                        Panzerwagenlabel.setText("Panzerwagen: " + String.valueOf(Panzerwagend) + "  ");
+                        Panzerfaustlabel.setText("Panzerfäuste: " + String.valueOf(Panzerfaustd) + "   ");
+                        kasernenlabel.setText("Kasernen: " + String.valueOf(kasernen) + "  ");
+                        break;
+                    }  
+
+                } catch (FileNotFoundException ex) {
+                    Logger.getLogger(truppenklicker.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(truppenklicker.class.getName()).log(Level.SEVERE, null, ex);
+
+                } finally {
+                    try {
+                        reader.close();
+                        fis.close();
+                    } catch (IOException ex) {
+                        Logger.getLogger(truppenklicker.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                } 
+
+            }
+        }
+
+    }
+
+    public double timer(){
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    pps = (soldaten * 0.025) + (g36s * 0.08) + (offiziere * 0.1) + (panzerd * 1.65) + (p3cs * 1.795) + (hamburgd * 1.895) + (Panzerwagend * 1.35) + (Panzerfaustd * 0.095) + (kasernen * 0.025);
+                    clicksAm = clicksAm + pps;
+                    clicks.setText("$: " + BigDecimal.valueOf(clicksAm).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");
+                    warpower = (soldaten / 10) + (g36s / 15) + (offiziere / 9) + (panzerd / 3) + (p3cs / 3) + (hamburgd / 1.5) + (Panzerwagend / 5) + (Panzerfaustd / 8);
+                    warpowerlabel.setText("Kriegskraft: " + BigDecimal.valueOf(warpower).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN));
+
+                }
+            }, 1000, 1000);
+
+        return 0;
+
+    }
+
+    public double timer2(){
+
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    soldaten = soldaten + kasernen;
+                    soldatenlabel.setText("Soldaten: " + String.valueOf(soldaten) + "  ");
+                    G36Clabel.setText("G36C: " + String.valueOf(g36s) + "  ");
+                    offizierlabel.setText("Offiziere: " + String.valueOf(offiziere) + "  ");
+                    panzerlabel.setText("Panzer: " + String.valueOf(panzerd) + "  ");
+                    P3Clabel.setText("P-3C Orion: " + String.valueOf(p3cs) + "  ");
+                    hamburglabel.setText("Fregatte H.: " + String.valueOf(hamburgd) + "  ");
+                    Panzerwagenlabel.setText("Panzerwagen: " + String.valueOf(Panzerwagend) + "  ");
+                    Panzerfaustlabel.setText("Panzerfäuste: " + String.valueOf(Panzerfaustd) + "   ");
+                    kasernenlabel.setText("Kasernen: " + String.valueOf(kasernen) + "  ");
+                    dienstgradpunkte = dienstgradpunkte + 4;
+
+                }
+            }, 10000, 10000);
+
+        return 0;
+
+    }
+
+    public double timer3(){
+
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    dienstgradpunkte = dienstgradpunkte + 5;
+                    dienstgradpunkte = dienstgradpunkte + ((soldaten + g36s + offiziere + panzerd + p3cs + hamburgd + Panzerwagend + Panzerfaustd) * 0.2);
+
+                    if (dienstgradpunkte > 110 && dienstgradpunkte < 400) {
+                        dienstgrad = 2;
+                        if (wehrsoldset == 0) {
+                            wehrsold = wehrsold + 0.5;
+                        }
+                        wehrsoldset = 0.1;
+                    }else if (dienstgradpunkte > 400 && dienstgradpunkte < 900) {
+                        dienstgrad = 3;
+                        if (wehrsoldset == 0.1) {
+                            wehrsold = wehrsold + 0.5;
+                        }
+                        wehrsoldset = 0.2;
+                    }else if (dienstgradpunkte > 900 && dienstgradpunkte < 1400) {
+                        dienstgrad = 4;
+                        if (wehrsoldset == 0.2) {
+                            wehrsold = wehrsold + 0.5;
+                        }
+                        wehrsoldset = 0.3;
+                    }else if (dienstgradpunkte > 1400 && dienstgradpunkte < 2000) {
+                        dienstgrad = 5;
+                        if (wehrsoldset == 0.4) {
+                            wehrsold = wehrsold + 0.5;
+                        }
+                        wehrsoldset = 0.5;
+                    }else if (dienstgradpunkte > 2000 && dienstgradpunkte < 2900) {
+                        dienstgrad = 6;
+                        if (wehrsoldset == 0.5) {
+                            wehrsold = wehrsold + 0.5;
+                        }
+                        wehrsoldset = 0.6;
+                    }else if (dienstgradpunkte > 2900 && dienstgradpunkte < 3800) {
+                        dienstgrad = 7;
+                        if (wehrsoldset == 0.6) {
+                            wehrsold = wehrsold + 0.5;
+                        }
+                        wehrsoldset = 0.7;
+                    }else if (dienstgradpunkte > 3800 && dienstgradpunkte < 4800) {
+                        dienstgrad = 8;
+                        if (wehrsoldset == 0.7) {
+                            wehrsold = wehrsold + 0.5;
+                        }
+                        wehrsoldset = 0.8;
+                    }else if (dienstgradpunkte > 4800 && dienstgradpunkte < 5900) {
+                        dienstgrad = 9;
+                        if (wehrsoldset == 0.8) {
+                            wehrsold = wehrsold + 0.5;
+                        }
+                        wehrsoldset = 0.9;
+                    }else if (dienstgradpunkte > 5900 && dienstgradpunkte < 7000) {
+                        dienstgrad = 10;
+                        if (wehrsoldset == 0.9) {
+                            wehrsold = wehrsold + 0.5;
+                        }
+                        wehrsoldset = 0.10;
+                    }else if (dienstgradpunkte > 7000 && dienstgradpunkte < 8900) {
+                        dienstgrad = 11;
+                        if (wehrsoldset == 0.10) {
+                            wehrsold = wehrsold + 0.5;
+                        }
+                        wehrsoldset = 0.11;
+                    }else if (dienstgradpunkte > 8900 && dienstgradpunkte < 10000) {
+                        dienstgrad = 12;
+                        if (wehrsoldset == 0.11) {
+                            wehrsold = wehrsold + 0.5;
+                        }
+                        wehrsoldset = 0.12;
+                    }else if (dienstgradpunkte > 10000 && dienstgradpunkte < 12000) {
+                        dienstgrad = 13;
+                        if (wehrsoldset == 0.12) {
+                            wehrsold = wehrsold + 0.5;
+                        }
+                        wehrsoldset = 0.13;
+                    }else if (dienstgradpunkte > 12000 && dienstgradpunkte < 14000) {
+                        dienstgrad = 14;
+                        if (wehrsoldset == 0.13) {
+                            wehrsold = wehrsold + 0.5;
+                        }
+                        wehrsoldset = 0.14;
+                    }else if (dienstgradpunkte > 14000 && dienstgradpunkte < 16000) {
+                        dienstgrad = 15;
+                        if (wehrsoldset == 0.14) {
+                            wehrsold = wehrsold + 0.5;
+                        }
+                        wehrsoldset = 0.15;
+                    }else if (dienstgradpunkte > 16000 && dienstgradpunkte < 18000) {
+                        dienstgrad = 16;
+                        if (wehrsoldset == 0.15) {
+                            wehrsold = wehrsold + 0.5;
+                        }
+                        wehrsoldset = 0.16;
+                    }else if (dienstgradpunkte > 18000 && dienstgradpunkte < 24000) {
+                        dienstgrad = 17;
+                        if (wehrsoldset == 0.16) {
+                            wehrsold = wehrsold + 0.5;
+                        }
+                        wehrsoldset = 0.17;
+                    }else if (dienstgradpunkte > 24000) {
+                        dienstgrad = 18;
+                        if (wehrsoldset == 0.17) {
+                            wehrsold = wehrsold + 1.5;
+                        }
+                        wehrsoldset = 0.18;
+                    }
+                }
+            }, 10000, 10000);
+
+        return 0;
+
+    }
+
+    public void test(){
+    }
+
+    public void kriegrechner(){
+        JFrame Z = new JFrame();
+        Z.setTitle("In den Krieg ziehen");
+        Z.setSize(800,600);
+        kriego = new JPanel();
+        Z.add(kriego);
+        Random randomGenerator = new Random();
+        for (int idx = 0; idx<10; idx++) {
+            randomInt = 1 + randomGenerator.nextInt(6);
+        }
+        if (randomInt == 1) {
+            krieglabel.setText("Ihr gegner: USA. Kriegskraft: " + usapower);
+            kriego.add(angriff);
+        } else if (randomInt == 2) {
+            krieglabel.setText("Ihr gegner: Russland. Kriegskraft: " + ruspower);
+            kriego.add(angriff);
+        } else if (randomInt == 3) {
+            krieglabel.setText("Ihr gegner: Polen. Kriegskraft: " + polenpower);
+            kriego.add(angriff);
+        }else if (randomInt == 4) {
+            krieglabel.setText("Ihr gegner: Frankreich. Kriegskraft: " + frankreichpower);
+            kriego.add(angriff);
+        }else if (randomInt == 5) {
+            krieglabel.setText("Ihr gegner: Türkei. Kriegskraft: " + turkenpower);
+            kriego.add(angriff);
+        }else if (randomInt == 6) {
+            krieglabel.setText("Ihr gegner: Nordkorea. Kriegskraft: " + nordkoreapower);
+            kriego.add(angriff);
+        }
+        kriego.add(krieglabel);
+        kriego.add(newrandom);
+        kriego.setVisible(true);
+        Z.setVisible(true);
+    }
+
+    public void kriegrechnernewrandom(){
+        Random randomGenerator = new Random();
+        for (int idx = 0; idx<10; idx++) {
+            randomInt = 1 + randomGenerator.nextInt(6);
+        }
+        if (randomInt == 1) {
+            krieglabel.setText("Ihr gegner: USA. Kriegskraft: " + usapower);
+            kriego.add(angriff);
+        } else if (randomInt == 2) {
+            krieglabel.setText("Ihr gegner: Russland. Kriegskraft: " + ruspower);
+            kriego.add(angriff);
+        } else if (randomInt == 3) {
+            krieglabel.setText("Ihr gegner: Polen. Kriegskraft: " + polenpower);
+            kriego.add(angriff);
+        }else if (randomInt == 4) {
+            krieglabel.setText("Ihr gegner: Frankreich. Kriegskraft: " + frankreichpower);
+            kriego.add(angriff);
+        }else if (randomInt == 5) {
+            krieglabel.setText("Ihr gegner: Türkei. Kriegskraft: " + turkenpower);
+            kriego.add(angriff);
+        }else if (randomInt == 6) {
+            krieglabel.setText("Ihr gegner: Nordkorea. Kriegskraft: " + nordkoreapower);
+            kriego.add(angriff);
+        }
+        kriego.add(krieglabel);
+        kriego.add(newrandom);
+        kriego.setVisible(true);   
+    }
+
+    public void angriffmethode(){
+        if(randomInt == 1){
+            if (usapower > warpower){
+                JDialog niederlage = new JDialog();
+                niederlage.setTitle("Niederlage!");
+                niederlage.setSize(500, 100);
+                niederlage.setModal(true);
+                niederlage.add(new JLabel("Der Krieg gegen die USA wurde verloren. Dir werden alle Soldaten abgezogen."));
+                pps = pps - (soldaten * 0.025);
+                soldaten = 0;
+                soldatenlabel.setText("Soldaten: " + String.valueOf(soldaten) + "  ");
+                niederlage.setVisible(true);
+            } else if(usapower < warpower) {
+                JDialog sieg = new JDialog();
+                sieg.setTitle("Sieg!");
+                sieg.setSize(550, 100);
+                sieg.setModal(true);
+                sieg.add(new JLabel("Der Krieg gegen die USA wurde gewonnen!"));
+                sieg.add(new JLabel("Dir werden als Kriegsvergütung 100 Soldaten, 10 Offiziere und $2500000 gutgeschrieben."));
+                pps = pps + 3.5;
+                soldaten = soldaten + 100;
+                offiziere = offiziere + 10;
+                clicksAm = clicksAm + 2500000;
+                soldatenlabel.setText("Soldaten: " + String.valueOf(soldaten) + "  ");
+                offizierlabel.setText("Offiziere: " + String.valueOf(offiziere) + "  ");
+                sieg.setVisible(true);
+            }
+        }
+        if(randomInt == 2){
+            if (ruspower > warpower){
+                JDialog niederlage = new JDialog();
+                niederlage.setTitle("Niederlage!");
+                niederlage.setSize(500, 100);
+                niederlage.setModal(true);
+                niederlage.add(new JLabel("Der Krieg gegen die Russen wurde verloren. Dir werden alle Soldaten abgezogen."));
+                pps = pps - (soldaten * 0.025);
+                soldaten = 0;
+                soldatenlabel.setText("Soldaten: " + String.valueOf(soldaten) + "  ");
+                niederlage.setVisible(true);
+            } else if(ruspower < warpower) {
+                JDialog sieg = new JDialog();
+                sieg.setTitle("Sieg!");
+                sieg.setSize(550, 100);
+                sieg.setModal(true);
+                sieg.add(new JLabel("Der Krieg gegen die Russen wurde gewonnen!"));
+                sieg.add(new JLabel("Dir werden als Kriegsvergütung 115 Soldaten, 12 Offiziere und $3000000 gutgeschrieben."));
+                pps = pps + 4.075;
+                soldaten = soldaten + 115;
+                offiziere = offiziere + 12;
+                clicksAm = clicksAm + 3000000;
+                soldatenlabel.setText("Soldaten: " + String.valueOf(soldaten) + "  ");
+                offizierlabel.setText("Offiziere: " + String.valueOf(offiziere) + "  ");
+                sieg.setVisible(true);
+            }
+        }
+        if(randomInt == 3){
+            if (polenpower > warpower){
+                JDialog niederlage = new JDialog();
+                niederlage.setTitle("Niederlage!");
+                niederlage.setSize(500, 100);
+                niederlage.setModal(true);
+                niederlage.add(new JLabel("Der Krieg gegen die Polen wurde verloren. Dir werden alle Soldaten abgezogen."));
+                pps = pps - (soldaten * 0.025);
+                soldaten = 0;
+                soldatenlabel.setText("Soldaten: " + String.valueOf(soldaten) + "  ");
+                niederlage.setVisible(true);
+            } else if(polenpower < warpower) {
+                JDialog sieg = new JDialog();
+                sieg.setTitle("Sieg!");
+                sieg.setSize(550, 100);
+                sieg.setModal(true);
+                sieg.add(new JLabel("Der Krieg gegen die Polen wurde gewonnen!"));
+                sieg.add(new JLabel("Dir werden als Kriegsvergütung 75 Soldaten, 6 Offiziere und $1500000 gutgeschrieben."));
+                pps = pps + 2.475;
+                soldaten = soldaten + 75;
+                offiziere = offiziere + 6;
+                clicksAm = clicksAm + 1500000;
+                soldatenlabel.setText("Soldaten: " + String.valueOf(soldaten) + "  ");
+                offizierlabel.setText("Offiziere: " + String.valueOf(offiziere) + "  ");
+                sieg.setVisible(true);
+            }
+        }
+        if(randomInt == 4){
+            if (frankreichpower > warpower){
+                JDialog niederlage = new JDialog();
+                niederlage.setTitle("Niederlage!");
+                niederlage.setSize(500, 100);
+                niederlage.setModal(true);
+                niederlage.add(new JLabel("Der Krieg gegen die Franzosen wurde verloren. Dir werden alle Soldaten abgezogen."));
+                pps = pps - (soldaten * 0.025);
+                soldaten = 0;
+                soldatenlabel.setText("Soldaten: " + String.valueOf(soldaten) + "  ");
+                niederlage.setVisible(true);
+            } else if(frankreichpower < warpower) {
+                JDialog sieg = new JDialog();
+                sieg.setTitle("Sieg!");
+                sieg.setSize(550, 100);
+                sieg.setModal(true);
+                sieg.add(new JLabel("Der Krieg gegen die Franzosen wurde gewonnen!"));
+                sieg.add(new JLabel("Dir werden als Kriegsvergütung 5 Soldaten, 1 Offiziere und $250000 gutgeschrieben."));
+                pps = pps + 0.225;
+                soldaten = soldaten + 5;
+                offiziere = offiziere + 1;
+                clicksAm = clicksAm + 250000;
+                soldatenlabel.setText("Soldaten: " + String.valueOf(soldaten) + "  ");
+                offizierlabel.setText("Offiziere: " + String.valueOf(offiziere) + "  ");
+                sieg.setVisible(true);
+            }
+        }
+        if(randomInt == 5){
+            if (turkenpower > warpower){
+                JDialog niederlage = new JDialog();
+                niederlage.setTitle("Niederlage!");
+                niederlage.setSize(500, 100);
+                niederlage.setModal(true);
+                niederlage.add(new JLabel("Der Krieg gegen die Türken wurde verloren. Dir werden alle Soldaten abgezogen."));
+                pps = pps - (soldaten * 0.025);
+                soldaten = 0;
+                soldatenlabel.setText("Soldaten: " + String.valueOf(soldaten) + "  ");
+                niederlage.setVisible(true);
+            } else if(turkenpower < warpower) {
+                JDialog sieg = new JDialog();
+                sieg.setTitle("Sieg!");
+                sieg.setSize(550, 100);
+                sieg.setModal(true);
+                sieg.add(new JLabel("Der Krieg gegen die Türken wurde gewonnen!"));
+                sieg.add(new JLabel("Dir werden als Kriegsvergütung 90 Soldaten, 6 Offiziere und $2000000 gutgeschrieben."));
+                pps = pps + 2.85;
+                soldaten = soldaten + 90;
+                offiziere = offiziere + 6;
+                clicksAm = clicksAm + 2000000;
+                soldatenlabel.setText("Soldaten: " + String.valueOf(soldaten) + "  ");
+                offizierlabel.setText("Offiziere: " + String.valueOf(offiziere) + "  ");
+                sieg.setVisible(true);
+            }
+        }
+        if(randomInt == 6){
+            if (nordkoreapower > warpower){
+                JDialog niederlage = new JDialog();
+                niederlage.setTitle("Niederlage!");
+                niederlage.setSize(500, 100);
+                niederlage.setModal(true);
+                niederlage.add(new JLabel("Der Krieg gegen die Nordkorea wurde verloren. Dir werden alle Soldaten abgezogen."));
+                pps = pps - (soldaten * 0.025);
+                soldaten = 0;
+                soldatenlabel.setText("Soldaten: " + String.valueOf(soldaten) + "  ");
+                niederlage.setVisible(true);
+            } else if(nordkoreapower < warpower) {
+                JDialog sieg = new JDialog();
+                sieg.setTitle("Sieg!");
+                sieg.setSize(550, 100);
+                sieg.setModal(true);
+                sieg.add(new JLabel("Der Krieg gegen die Nordkorea wurde gewonnen!"));
+                sieg.add(new JLabel("Dir werden als Kriegsvergütung 80 Soldaten, 5 Offiziere und $1800000 gutgeschrieben."));
+                pps = pps + 2.5;
+                soldaten = soldaten + 80;
+                offiziere = offiziere + 5;
+                clicksAm = clicksAm + 1800000;
+                soldatenlabel.setText("Soldaten: " + String.valueOf(soldaten) + "  ");
+                offizierlabel.setText("Offiziere: " + String.valueOf(offiziere) + "  ");
+                sieg.setVisible(true);
+            }
+        }   
+    }
+
+    public void neuerangriff(){
+        JFrame Z = new JFrame();
+        Z.setTitle("In den Krieg ziehen");
+        Z.setSize(800,600);
+        kriego = new JPanel();
+        Z.add(kriego);
+        String[] objektwahl = {"Soldaten", "Panzer", "Panzerwagen", "Fregatte H.", "P-3C" };
+        JComboBox angriffauswahl = new JComboBox(objektwahl);
+        angriffauswahl.setSelectedItem(Soldat);
+        Object obj = angriffauswahl.getSelectedItem();
+        mengeEingeben = new JTextField(15);
+        kriego.add(angriffauswahl);
+        kriego.add(mengeEingeben);
+        kriego.add(ok);
+        kriego.add(Testlabel);
+        kriego.setVisible(true);
+        Z.setVisible(true);
+    }
+
+    public void ladeDatei(){ 
+        FileInputStream fis = null;
+        BufferedReader reader = null;
+
+        try {
+            fis = new FileInputStream("saves/savegame.txt");
+            reader = new BufferedReader(new InputStreamReader(fis));
+
+            String line = reader.readLine();
+            while(line != null){
+                clicksAm = Double.parseDouble(line);
+                line = reader.readLine();
+                soldaten = Double.parseDouble(line);
+                line = reader.readLine();
+                g36s = Double.parseDouble(line);
+                line = reader.readLine();
+                offiziere = Double.parseDouble(line);
+                line = reader.readLine();
+                panzerd = Double.parseDouble(line);
+                line = reader.readLine();
+                p3cs = Double.parseDouble(line);
+                line = reader.readLine();
+                hamburgd = Double.parseDouble(line);
+                line = reader.readLine();
+                Panzerwagend = Double.parseDouble(line);
+                line = reader.readLine();
+                Panzerfaustd = Double.parseDouble(line);
+                line = reader.readLine();
+                kasernen = Double.parseDouble(line);
+                line = reader.readLine();
+                dienstgradpunkte = Double.parseDouble(line);
+                line = reader.readLine();
+                dienstgrad = Double.parseDouble(line);
+                clicks.setText("$: " + BigDecimal.valueOf(clicksAm).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");
+                soldatenlabel.setText("Soldaten: " + String.valueOf(soldaten) + "  ");
+                G36Clabel.setText("G36C: " + String.valueOf(g36s) + "  ");
+                offizierlabel.setText("Offiziere: " + String.valueOf(offiziere) + "  ");
+                panzerlabel.setText("Panzer: " + String.valueOf(panzerd) + "  ");
+                P3Clabel.setText("P-3C Orion: " + String.valueOf(p3cs) + "  ");
+                hamburglabel.setText("Fregatte H.: " + String.valueOf(hamburgd) + "  ");
+                Panzerwagenlabel.setText("Panzerwagen: " + String.valueOf(Panzerwagend) + "  ");
+                Panzerfaustlabel.setText("Panzerfäuste: " + String.valueOf(Panzerfaustd) + "   ");
+                kasernenlabel.setText("Kasernen: " + String.valueOf(kasernen) + "  ");
+                break;
+            }  
+
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(truppenklicker.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(truppenklicker.class.getName()).log(Level.SEVERE, null, ex);
+
+        } finally {
+            try {
+                reader.close();
+                fis.close();
+            } catch (IOException ex) {
+                Logger.getLogger(truppenklicker.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        } 
+    }
+}
