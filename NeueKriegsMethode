@@ -25,6 +25,9 @@ import javax.swing.event.DocumentListener;
 public class truppenklicker extends JFrame implements ActionListener{
     int yourScale = 2;
     int ppsScale = 3;
+    
+    JFrame X = new JFrame();
+    JFrame Z = new JFrame();
 
     double wehrsoldset = 0;
     double clicksAm = 0;
@@ -55,7 +58,10 @@ public class truppenklicker extends JFrame implements ActionListener{
     String menge;
     int menge1;
     double wehrsold = 1;
-    String ausgewahlt;
+    Object ausgewahlt;
+    String soldatenDisplay = String.valueOf(g36s);
+    double mengedouble = 0;
+    double g36imeinsatz = 0;
 
     JPanel outer;
     JPanel nested;
@@ -110,6 +116,8 @@ public class truppenklicker extends JFrame implements ActionListener{
     JButton ja;
     JButton nein;
     JButton ok;
+    JButton SoldatenJa;
+    JButton SoldatenNein;
 
     JButton soldatenB;
     JButton Offizier;
@@ -130,8 +138,14 @@ public class truppenklicker extends JFrame implements ActionListener{
 
     JTextField mengeEingeben;
 
-    String[] objektwahl = {"Soldaten", "Panzer", "Panzerwagen", "Fregatte H.", "P-3C" };
+    String[] objektwahl = {"Soldat", "Panzer", "Panzerwagen", "Fregatte", "P3C" };
     JComboBox angriffauswahl = new JComboBox(objektwahl);
+    
+    boolean SoldatenG36 = false;
+    
+    JPanel XPanel = new JPanel();
+        JPanel XPanel2 = new JPanel();
+        JLabel XLabel1 = new JLabel();
 
     public truppenklicker()
     {
@@ -145,7 +159,6 @@ public class truppenklicker extends JFrame implements ActionListener{
         top = new JPanel();
         setLocationRelativeTo(null);
 
-        angriffauswahl.setSelectedItem(Soldat);
         Object obj = angriffauswahl.getSelectedItem();
 
         timer();
@@ -153,7 +166,14 @@ public class truppenklicker extends JFrame implements ActionListener{
         timer3();
 
         clicks = new JLabel();
-        clicks.setText("$: " + BigDecimal.valueOf(clicksAm).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");
+        clicks.setText("$: " + BigDecimal.valueOf(clicksAm).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");   
+        if (clicksAm > 1000 && clicksAm < 1000000) {
+            clicks.setText("$: " + BigDecimal.valueOf(clicksAm / 1000).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "k" + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");   
+        }else if (clicksAm > 1000000 && clicksAm < 1000000000) {
+            clicks.setText("$: " + BigDecimal.valueOf(clicksAm / 1000000).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "mio" + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");   
+        }else if (clicksAm > 1000000000) {
+            clicks.setText("$: " + BigDecimal.valueOf(clicksAm / 1000000000).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "mrd" + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");   
+        }
 
         soldatenlabel = new JLabel();
         soldatenlabel.setText("Soldaten: " + String.valueOf(soldaten) + "  ");
@@ -196,22 +216,42 @@ public class truppenklicker extends JFrame implements ActionListener{
         Testlabel = new JLabel();
 
         clickerS = new JButton("Klick!");
-        clickerS.setPreferredSize(new Dimension(80, 30));
-        Personal = new JButton("Personal");
-        Personalgeb = new JButton("Personalgebäude");
-        Waffen = new JButton("Waffen");
-        Fahrzeuge = new JButton("Fahrzeuge");
-        Flugzeuge = new JButton("Flugzeuge");
-        Marine = new JButton("Marine");
-        speichern = new JButton("Speichern");
-        laden = new JButton("Laden");
-        Krieg = new JButton("Krieg");
-        ja = new JButton("Ja");
-        nein = new JButton("Nein");
+        clickerS.setPreferredSize(new 
+            Dimension(80, 30));
+        Personal = new 
+        JButton("Personal");
+        Personalgeb = new 
+        JButton("Personalgebäude");
+        Waffen = new 
+        JButton("Waffen");
+        Fahrzeuge = new 
+        JButton("Fahrzeuge");
+        Flugzeuge = new 
+        JButton("Flugzeuge");
+        Marine = new 
+        JButton("Marine");
+        speichern = new 
+        JButton("Speichern");
+        laden = new 
+        JButton("Laden");
+        Krieg = new 
+        JButton("Krieg");
+        ja = new 
+        JButton("Ja");
+        nein = new 
+        JButton("Nein");
 
         soldatenB = new JButton("Soldat");
         soldatenB.setVisible(true);
         soldatenB.setPreferredSize(new Dimension(80, 30));
+        
+        SoldatenJa = new JButton("Ja");
+        SoldatenJa.setVisible(true);
+        SoldatenJa.setPreferredSize(new Dimension(80, 30));
+        
+        SoldatenNein = new JButton("Nein");
+        SoldatenNein.setVisible(true);
+        SoldatenNein.setPreferredSize(new Dimension(80, 30));
 
         Offizier = new JButton("Offizier");
         Offizier.setVisible(true);
@@ -268,13 +308,20 @@ public class truppenklicker extends JFrame implements ActionListener{
         menuBar = new JMenuBar();
 
         menu = new JMenu("Personal");
-        menu2 = new JMenu("Waffen");
-        menu3 = new JMenu("Fahrzeuge");
-        menu4 = new JMenu("Flugzeuge");
-        menu5 = new JMenu("Marine");
-        menu6 = new JMenu("Personalgebäude");
-        menu7 = new JMenu("Krieg");
-        menu8 = new JMenu("Einstellungen");
+        menu2 = new 
+        JMenu("Waffen");
+        menu3 = new 
+        JMenu("Fahrzeuge");
+        menu4 = new 
+        JMenu("Flugzeuge");
+        menu5 = new 
+        JMenu("Marine");
+        menu6 = new 
+        JMenu("Personalgebäude");
+        menu7 = new 
+        JMenu("Krieg");
+        menu8 = new 
+        JMenu("Einstellungen");
 
         menuBar.add(menu);
         menuBar.add(menu2);
@@ -286,20 +333,34 @@ public class truppenklicker extends JFrame implements ActionListener{
         menuBar.add(menu8);
 
         menuItem = new JMenuItem("Soldaten");
-        menuItem2 = new JMenuItem("Offiziere");
-        menuItem3 = new JMenuItem("G36C");
-        menuItem4 = new JMenuItem("Panzerfaust");
-        menuItem5 = new JMenuItem("Panzer");
-        menuItem6 = new JMenuItem("Panzerwagen");
-        menuItem7 = new JMenuItem("P-3C Orion");
-        menuItem8 = new JMenuItem("Fregatte Hamburg");
-        menuItem9 = new JMenuItem("Kasernen");
-        menuItem10 = new JMenuItem("Kriegsübersicht");
-        menuItem11 = new JMenuItem("Speichern");
-        menuItem12 = new JMenuItem("Laden");
-        menuItem13 = new JCheckBoxMenuItem("Debug/Cheatmode");
-        menuItem14 = new JMenuItem("Zurücksetzen");
-        menuItem15 = new JMenuItem("Profil");
+        menuItem2 = new 
+        JMenuItem("Offiziere");
+        menuItem3 = new 
+        JMenuItem("G36C");
+        menuItem4 = new 
+        JMenuItem("Panzerfaust");
+        menuItem5 = new 
+        JMenuItem("Panzer");
+        menuItem6 = new 
+        JMenuItem("Panzerwagen");
+        menuItem7 = new 
+        JMenuItem("P-3C Orion");
+        menuItem8 = new 
+        JMenuItem("Fregatte Hamburg");
+        menuItem9 = new 
+        JMenuItem("Kasernen");
+        menuItem10 = new 
+        JMenuItem("Kriegsübersicht");
+        menuItem11 = new 
+        JMenuItem("Speichern");
+        menuItem12 = new 
+        JMenuItem("Laden");
+        menuItem13 = new 
+        JCheckBoxMenuItem("Debug/Cheatmode");
+        menuItem14 = new 
+        JMenuItem("Zurücksetzen");
+        menuItem15 = new 
+        JMenuItem("Profil");
 
         menu.add(menuItem);
         menu.add(menuItem2);
@@ -359,6 +420,8 @@ public class truppenklicker extends JFrame implements ActionListener{
         menuItem13.addActionListener(this);
         menuItem14.addActionListener(this);
         menuItem15.addActionListener(this);
+        SoldatenJa.addActionListener(this);
+        SoldatenNein.addActionListener(this);
         this.add(outer);
 
         nested.add(clicks);
@@ -384,6 +447,34 @@ public class truppenklicker extends JFrame implements ActionListener{
         outer.add(top, BorderLayout.CENTER);
 
     }
+    
+    public void neuerangriff(){
+        
+        Z.setTitle("In den Krieg ziehen");
+        Z.setSize(800,600);
+        kriego = new JPanel();
+        Z.add(kriego);
+        String[] objektwahl = {"Soldat", "Panzer", "Panzerwagen", "Fregatte", "P3C" };
+        JComboBox angriffauswahl = new JComboBox(objektwahl);
+        angriffauswahl.setSelectedItem(Soldat);
+        Object obj = angriffauswahl.getSelectedItem();
+        mengeEingeben = new JTextField(15);
+        kriego.add(angriffauswahl);
+        kriego.add(mengeEingeben);
+        kriego.add(ok);
+        kriego.add(Testlabel);
+        kriego.setVisible(true);
+        Z.setVisible(true);
+        angriffauswahl.addItemListener(new ItemListener() {
+                    @Override
+                    public void itemStateChanged(ItemEvent e) {
+                        if(e.getStateChange() == ItemEvent.SELECTED) {
+                            ausgewahlt = (Object) angriffauswahl.getSelectedItem();
+                            Testlabel.setText((String) angriffauswahl.getSelectedItem() + ausgewahlt);
+                        }
+                    }
+                });
+    }
 
     public static void main(String[] args) {
         truppenklicker tl = new truppenklicker();
@@ -394,7 +485,14 @@ public class truppenklicker extends JFrame implements ActionListener{
     public void actionPerformed (ActionEvent ae){
         if(ae.getSource() == this.clickerS){
             clicksAm = clicksAm = clicksAm + wehrsold;
-            clicks.setText("$: " + BigDecimal.valueOf(clicksAm).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");
+            clicks.setText("$: " + BigDecimal.valueOf(clicksAm).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");   
+            if (clicksAm > 1000 && clicksAm < 1000000) {
+                clicks.setText("$: " + BigDecimal.valueOf(clicksAm / 1000).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "k" + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");   
+            }else if (clicksAm > 1000000 && clicksAm < 1000000000) {
+                clicks.setText("$: " + BigDecimal.valueOf(clicksAm / 1000000).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "mio" + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");   
+            }else if (clicksAm > 1000000000) {
+                clicks.setText("$: " + BigDecimal.valueOf(clicksAm / 1000000000).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "mrd" + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");   
+            }
         }
         JFrame A = new JFrame();
 
@@ -404,7 +502,14 @@ public class truppenklicker extends JFrame implements ActionListener{
                 soldaten = soldaten + 1;
                 soldatenlabel.setText("Soldaten: " + String.valueOf(soldaten) + "  ");
                 pps = pps + 0.025;
-                clicks.setText("$: " + BigDecimal.valueOf(clicksAm).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");
+                clicks.setText("$: " + BigDecimal.valueOf(clicksAm).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");   
+                if (clicksAm > 1000 && clicksAm < 1000000) {
+                    clicks.setText("$: " + BigDecimal.valueOf(clicksAm / 1000).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "k" + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");   
+                }else if (clicksAm > 1000000 && clicksAm < 1000000000) {
+                    clicks.setText("$: " + BigDecimal.valueOf(clicksAm / 1000000).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "mio" + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");   
+                }else if (clicksAm > 1000000000) {
+                    clicks.setText("$: " + BigDecimal.valueOf(clicksAm / 1000000000).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "mrd" + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");   
+                }
             } else {
 
                 JDialog error = new JDialog();
@@ -421,7 +526,14 @@ public class truppenklicker extends JFrame implements ActionListener{
                 clicksAm = clicksAm - 10000000;
                 kasernen = kasernen + 1;
                 kasernenlabel.setText("Kasernen: " + String.valueOf(kasernen) + "  ");
-                clicks.setText("$: " + BigDecimal.valueOf(clicksAm).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");
+                clicks.setText("$: " + BigDecimal.valueOf(clicksAm).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");   
+                if (clicksAm > 1000 && clicksAm < 1000000) {
+                    clicks.setText("$: " + BigDecimal.valueOf(clicksAm / 1000).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "k" + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");   
+                }else if (clicksAm > 1000000 && clicksAm < 1000000000) {
+                    clicks.setText("$: " + BigDecimal.valueOf(clicksAm / 1000000).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "mio" + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");   
+                }else if (clicksAm > 1000000000) {
+                    clicks.setText("$: " + BigDecimal.valueOf(clicksAm / 1000000000).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "mrd" + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");   
+                }
             } else {
 
                 JDialog error = new JDialog();
@@ -440,7 +552,14 @@ public class truppenklicker extends JFrame implements ActionListener{
                 offiziere = offiziere + 1;
                 offizierlabel.setText("Offiziere: " + String.valueOf(offiziere) + "  ");
                 pps = pps + 0.1;
-                clicks.setText("$: " + BigDecimal.valueOf(clicksAm).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");
+                clicks.setText("$: " + BigDecimal.valueOf(clicksAm).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");   
+                if (clicksAm > 1000 && clicksAm < 1000000) {
+                    clicks.setText("$: " + BigDecimal.valueOf(clicksAm / 1000).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "k" + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");   
+                }else if (clicksAm > 1000000 && clicksAm < 1000000000) {
+                    clicks.setText("$: " + BigDecimal.valueOf(clicksAm / 1000000).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "mio" + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");   
+                }else if (clicksAm > 1000000000) {
+                    clicks.setText("$: " + BigDecimal.valueOf(clicksAm / 1000000000).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "mrd" + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");   
+                }
             } else {
 
                 JDialog error = new JDialog();
@@ -459,7 +578,14 @@ public class truppenklicker extends JFrame implements ActionListener{
                 g36s = g36s + 1;
                 G36Clabel.setText("G36C: " + String.valueOf(g36s) + "  ");
                 pps = pps + 0.08;
-                clicks.setText("$: " + BigDecimal.valueOf(clicksAm).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");
+                clicks.setText("$: " + BigDecimal.valueOf(clicksAm).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");   
+                if (clicksAm > 1000 && clicksAm < 1000000) {
+                    clicks.setText("$: " + BigDecimal.valueOf(clicksAm / 1000).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "k" + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");   
+                }else if (clicksAm > 1000000 && clicksAm < 1000000000) {
+                    clicks.setText("$: " + BigDecimal.valueOf(clicksAm / 1000000).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "mio" + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");   
+                }else if (clicksAm > 1000000000) {
+                    clicks.setText("$: " + BigDecimal.valueOf(clicksAm / 1000000000).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "mrd" + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");   
+                }
             } else {
 
                 JDialog error = new JDialog();
@@ -478,7 +604,14 @@ public class truppenklicker extends JFrame implements ActionListener{
                 Panzerfaustd = Panzerfaustd + 1;
                 Panzerfaustlabel.setText("Panzerfäuste: " + String.valueOf(Panzerfaustd) + "   ");
                 pps = pps + 0.095;
-                clicks.setText("$: " + BigDecimal.valueOf(clicksAm).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");
+                clicks.setText("$: " + BigDecimal.valueOf(clicksAm).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");   
+                if (clicksAm > 1000 && clicksAm < 1000000) {
+                    clicks.setText("$: " + BigDecimal.valueOf(clicksAm / 1000).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "k" + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");   
+                }else if (clicksAm > 1000000 && clicksAm < 1000000000) {
+                    clicks.setText("$: " + BigDecimal.valueOf(clicksAm / 1000000).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "mio" + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");   
+                }else if (clicksAm > 1000000000) {
+                    clicks.setText("$: " + BigDecimal.valueOf(clicksAm / 1000000000).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "mrd" + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");   
+                }
             } else {
 
                 JDialog error = new JDialog();
@@ -497,7 +630,14 @@ public class truppenklicker extends JFrame implements ActionListener{
                 panzerd = panzerd + 1;
                 panzerlabel.setText("Panzer: " + String.valueOf(panzerd) + "  ");
                 pps = pps + 0.165;
-                clicks.setText("$: " + BigDecimal.valueOf(clicksAm).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");
+                clicks.setText("$: " + BigDecimal.valueOf(clicksAm).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");   
+                if (clicksAm > 1000 && clicksAm < 1000000) {
+                    clicks.setText("$: " + BigDecimal.valueOf(clicksAm / 1000).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "k" + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");   
+                }else if (clicksAm > 1000000 && clicksAm < 1000000000) {
+                    clicks.setText("$: " + BigDecimal.valueOf(clicksAm / 1000000).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "mio" + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");   
+                }else if (clicksAm > 1000000000) {
+                    clicks.setText("$: " + BigDecimal.valueOf(clicksAm / 1000000000).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "mrd" + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");   
+                }
             } else {
 
                 JDialog error = new JDialog();
@@ -516,7 +656,14 @@ public class truppenklicker extends JFrame implements ActionListener{
                 Panzerwagend = Panzerwagend + 1;
                 Panzerwagenlabel.setText("Panzerwagen: " + String.valueOf(Panzerwagend) + "  ");
                 pps = pps + 1.35;
-                clicks.setText("$: " + BigDecimal.valueOf(clicksAm).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");
+                clicks.setText("$: " + BigDecimal.valueOf(clicksAm).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");   
+                if (clicksAm > 1000 && clicksAm < 1000000) {
+                    clicks.setText("$: " + BigDecimal.valueOf(clicksAm / 1000).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "k" + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");   
+                }else if (clicksAm > 1000000 && clicksAm < 1000000000) {
+                    clicks.setText("$: " + BigDecimal.valueOf(clicksAm / 1000000).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "mio" + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");   
+                }else if (clicksAm > 1000000000) {
+                    clicks.setText("$: " + BigDecimal.valueOf(clicksAm / 1000000000).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "mrd" + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");   
+                }
             } else {
 
                 JDialog error = new JDialog();
@@ -534,7 +681,14 @@ public class truppenklicker extends JFrame implements ActionListener{
                 p3cs = p3cs + 1;
                 P3Clabel.setText("P-3C Orion: " + String.valueOf(p3cs) + "  ");
                 pps = pps + 1.795;
-                clicks.setText("$: " + BigDecimal.valueOf(clicksAm).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");
+                clicks.setText("$: " + BigDecimal.valueOf(clicksAm).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");   
+                if (clicksAm > 1000 && clicksAm < 1000000) {
+                    clicks.setText("$: " + BigDecimal.valueOf(clicksAm / 1000).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "k" + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");   
+                }else if (clicksAm > 1000000 && clicksAm < 1000000000) {
+                    clicks.setText("$: " + BigDecimal.valueOf(clicksAm / 1000000).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "mio" + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");   
+                }else if (clicksAm > 1000000000) {
+                    clicks.setText("$: " + BigDecimal.valueOf(clicksAm / 1000000000).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "mrd" + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");   
+                }
             } else {
 
                 JDialog error = new JDialog();
@@ -546,13 +700,21 @@ public class truppenklicker extends JFrame implements ActionListener{
 
             }
         }
+        
         if (ae.getSource() == this.menuItem8) {
             if (clicksAm >= 3000000) {
                 clicksAm = clicksAm - 3000000;
                 hamburgd = hamburgd + 1;
                 hamburglabel.setText("Fregatte H.: " + String.valueOf(hamburgd) + "  ");
                 pps = pps + 1.895;
-                clicks.setText("$: " + BigDecimal.valueOf(clicksAm).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");
+                clicks.setText("$: " + BigDecimal.valueOf(clicksAm).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");   
+                if (clicksAm > 1000 && clicksAm < 1000000) {
+                    clicks.setText("$: " + BigDecimal.valueOf(clicksAm / 1000).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "k" + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");   
+                }else if (clicksAm > 1000000 && clicksAm < 1000000000) {
+                    clicks.setText("$: " + BigDecimal.valueOf(clicksAm / 1000000).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "mio" + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");   
+                }else if (clicksAm > 1000000000) {
+                    clicks.setText("$: " + BigDecimal.valueOf(clicksAm / 1000000000).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "mrd" + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");   
+                }
             } else {
 
                 JDialog error = new JDialog();
@@ -706,6 +868,7 @@ public class truppenklicker extends JFrame implements ActionListener{
             Z.setVisible(true);
         }
         if (ae.getSource() == this.ja) {
+            save.setVisible(false);
             A.setVisible(false);
             A.dispose();
             clicksAm = 0;
@@ -720,7 +883,14 @@ public class truppenklicker extends JFrame implements ActionListener{
             kasernen = 0;
             dienstgradpunkte = 0;
             dienstgrad = 1;
-            clicks.setText("$: " + BigDecimal.valueOf(clicksAm).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");
+            clicks.setText("$: " + BigDecimal.valueOf(clicksAm).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");   
+            if (clicksAm > 1000 && clicksAm < 1000000) {
+                clicks.setText("$: " + BigDecimal.valueOf(clicksAm / 1000).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "k" + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");   
+            }else if (clicksAm > 1000000 && clicksAm < 1000000000) {
+                clicks.setText("$: " + BigDecimal.valueOf(clicksAm / 1000000).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "mio" + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");   
+            }else if (clicksAm > 1000000000) {
+                clicks.setText("$: " + BigDecimal.valueOf(clicksAm / 1000000000).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "mrd" + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");   
+            }
             soldatenlabel.setText("Soldaten: " + String.valueOf(soldaten) + "  ");
             G36Clabel.setText("G36C: " + String.valueOf(g36s) + "  ");
             offizierlabel.setText("Offiziere: " + String.valueOf(offiziere) + "  ");
@@ -732,11 +902,11 @@ public class truppenklicker extends JFrame implements ActionListener{
             kasernenlabel.setText("Kasernen: " + String.valueOf(kasernen) + "  ");
         }
         if (ae.getSource() == this.nein) {
-            A.setVisible(false);
+            save.setVisible(false);
             A.dispose();
         }
         if (ae.getSource() == this.speichernein) {
-            A.setVisible(false);
+            save.setVisible(false);
             A.dispose();
         }
         if (ae.getSource() == this.speicherja) {
@@ -769,8 +939,9 @@ public class truppenklicker extends JFrame implements ActionListener{
                 fw.write(String.valueOf(dienstgrad));
                 fw.flush();
                 fw.close();
-                A.setVisible(false);
+                save.setVisible(false);
                 A.dispose(); 
+                A.setVisible(false);
 
             } catch (IOException iox) {
                 iox.printStackTrace();
@@ -780,12 +951,38 @@ public class truppenklicker extends JFrame implements ActionListener{
         if (ae.getSource() == this.menuItem12) {
             ladeDatei();
         }
+        
+        
+        if(ae.getSource() == this.SoldatenJa){
+            g36imeinsatz = Double.parseDouble(soldatenDisplay);
+            SoldatenG36 = true;
+            SoldatenSonderschutz();
+            Z.dispose();
+        }
 
         if (ae.getSource() == this.ok) {
-            String menge = mengeEingeben.getText();
-            Object obj = angriffauswahl.getSelectedItem();
-            if(obj == Soldat) {
-                Testlabel.setText(menge + "Soldat");
+            String menge = null;
+            menge = mengeEingeben.getText();
+            mengedouble = Double.parseDouble(menge);
+            Object Soldatenobj = "Soldat";
+            Object Panzerobj = "Panzer";
+            Object Panzerwagenobj= "Panzerwagen";
+            Object Fregatteobj = "Fregatte";
+            Object P3Cobj = "P3C";
+            if(ausgewahlt.equals(Soldatenobj)) {
+                if(mengedouble == soldaten || mengedouble < soldaten){
+                    SoldatenAuswahlKrieg();
+                }else if(mengedouble > soldaten){
+                    Testlabel.setText("Zu wenig Soldaten");
+                }
+            }else if(ausgewahlt.equals(Panzerobj)){
+                Testlabel.setText("Es ist was anderes");
+            }else if(ausgewahlt.equals(Panzerwagenobj)){
+                Testlabel.setText("Pzw");
+            }else if(ausgewahlt.equals(Fregatteobj)){
+                Testlabel.setText("Frgt");
+            }else if(ausgewahlt.equals(P3Cobj)){
+                Testlabel.setText("P3C");
             }
         }
 
@@ -837,7 +1034,14 @@ public class truppenklicker extends JFrame implements ActionListener{
                 Panzerfaustd = 100;
                 kasernen = 10;
                 dienstgrad = 2;
-                clicks.setText("$: " + BigDecimal.valueOf(clicksAm).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");
+                clicks.setText("$: " + BigDecimal.valueOf(clicksAm).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");   
+                if (clicksAm > 1000 && clicksAm < 1000000) {
+                    clicks.setText("$: " + BigDecimal.valueOf(clicksAm / 1000).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "k" + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");   
+                }else if (clicksAm > 1000000 && clicksAm < 1000000000) {
+                    clicks.setText("$: " + BigDecimal.valueOf(clicksAm / 1000000).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "mio" + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");   
+                }else if (clicksAm > 1000000000) {
+                    clicks.setText("$: " + BigDecimal.valueOf(clicksAm / 1000000000).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "mrd" + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");   
+                }
                 soldatenlabel.setText("Soldaten: " + String.valueOf(soldaten) + "  ");
                 G36Clabel.setText("G36C: " + String.valueOf(g36s) + "  ");
                 offizierlabel.setText("Offiziere: " + String.valueOf(offiziere) + "  ");
@@ -881,7 +1085,14 @@ public class truppenklicker extends JFrame implements ActionListener{
                         dienstgradpunkte = Double.parseDouble(line);
                         line = reader.readLine();
                         dienstgrad = Double.parseDouble(line);
-                        clicks.setText("$: " + BigDecimal.valueOf(clicksAm).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");
+                        clicks.setText("$: " + BigDecimal.valueOf(clicksAm).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");   
+                        if (clicksAm > 1000 && clicksAm < 1000000) {
+                            clicks.setText("$: " + BigDecimal.valueOf(clicksAm / 1000).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "k" + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");   
+                        }else if (clicksAm > 1000000 && clicksAm < 1000000000) {
+                            clicks.setText("$: " + BigDecimal.valueOf(clicksAm / 1000000).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "mio" + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");   
+                        }else if (clicksAm > 1000000000) {
+                            clicks.setText("$: " + BigDecimal.valueOf(clicksAm / 1000000000).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "mrd" + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");   
+                        }
                         soldatenlabel.setText("Soldaten: " + String.valueOf(soldaten) + "  ");
                         G36Clabel.setText("G36C: " + String.valueOf(g36s) + "  ");
                         offizierlabel.setText("Offiziere: " + String.valueOf(offiziere) + "  ");
@@ -921,7 +1132,14 @@ public class truppenklicker extends JFrame implements ActionListener{
                 public void run() {
                     pps = (soldaten * 0.025) + (g36s * 0.08) + (offiziere * 0.1) + (panzerd * 1.65) + (p3cs * 1.795) + (hamburgd * 1.895) + (Panzerwagend * 1.35) + (Panzerfaustd * 0.095) + (kasernen * 0.025);
                     clicksAm = clicksAm + pps;
-                    clicks.setText("$: " + BigDecimal.valueOf(clicksAm).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");
+                    clicks.setText("$: " + BigDecimal.valueOf(clicksAm).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");   
+                    if (clicksAm > 1000 && clicksAm < 1000000) {
+                        clicks.setText("$: " + BigDecimal.valueOf(clicksAm / 1000).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "k" + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");   
+                    }else if (clicksAm > 1000000 && clicksAm < 1000000000) {
+                        clicks.setText("$: " + BigDecimal.valueOf(clicksAm / 1000000).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "mio" + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");   
+                    }else if (clicksAm > 1000000000) {
+                        clicks.setText("$: " + BigDecimal.valueOf(clicksAm / 1000000000).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "mrd" + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");   
+                    }
                     warpower = (soldaten / 10) + (g36s / 15) + (offiziere / 9) + (panzerd / 3) + (p3cs / 3) + (hamburgd / 1.5) + (Panzerwagend / 5) + (Panzerfaustd / 8);
                     warpowerlabel.setText("Kriegskraft: " + BigDecimal.valueOf(warpower).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN));
 
@@ -1076,7 +1294,45 @@ public class truppenklicker extends JFrame implements ActionListener{
 
     }
 
-    public void test(){
+    public void SoldatenAuswahlKrieg(){
+        
+        if(mengedouble > g36s){
+            soldatenDisplay = String.valueOf(g36s);
+        }else if(mengedouble < g36s || mengedouble == g36s){
+            soldatenDisplay = String.valueOf(mengedouble);
+        }
+        
+        X.setTitle("Soldaten ausstatten");
+        X.setSize(800,600);
+        XLabel1.setText("Wollen sie ihre Soldaten mit Waffen ausstatten? Sie besitzen " + g36s + " G36C's und können damit " + soldatenDisplay + " Soldaten ausstatten.");
+        XPanel.add(XLabel1);
+        XPanel2.add(SoldatenJa);
+        XPanel2.add(SoldatenNein);
+        X.add(XPanel, BorderLayout.PAGE_START);
+        X.add(XPanel2, BorderLayout.CENTER);
+        X.setVisible(true);
+        XPanel.setVisible(true);
+        XPanel2.setVisible(true);
+        XLabel1.setVisible(true);
+    }
+    
+    public void SoldatenSonderschutz(){
+        X.setVisible(false);
+        XPanel.setVisible(false);
+        XPanel2.setVisible(false);
+        XLabel1.setVisible(false);
+        X.setTitle("Soldaten ausstatten");
+        X.setSize(800,600);
+        XLabel1.setText("Wollen sie " + soldatenDisplay + " Soldaten mit Schutzwesten, Helmen und Schutzschuhen ausstatten? Dies kostet sie " + (mengedouble * 100) + "$");
+        XPanel.add(XLabel1);
+        XPanel2.add(SoldatenJa);
+        XPanel2.add(SoldatenNein);
+        X.add(XPanel, BorderLayout.PAGE_START);
+        X.add(XPanel2, BorderLayout.CENTER);
+        X.setVisible(true);
+        XPanel.setVisible(true);
+        XPanel2.setVisible(true);
+        XLabel1.setVisible(true);
     }
 
     public void kriegrechner(){
@@ -1143,189 +1399,7 @@ public class truppenklicker extends JFrame implements ActionListener{
         kriego.setVisible(true);   
     }
 
-    public void angriffmethode(){
-        if(randomInt == 1){
-            if (usapower > warpower){
-                JDialog niederlage = new JDialog();
-                niederlage.setTitle("Niederlage!");
-                niederlage.setSize(500, 100);
-                niederlage.setModal(true);
-                niederlage.add(new JLabel("Der Krieg gegen die USA wurde verloren. Dir werden alle Soldaten abgezogen."));
-                pps = pps - (soldaten * 0.025);
-                soldaten = 0;
-                soldatenlabel.setText("Soldaten: " + String.valueOf(soldaten) + "  ");
-                niederlage.setVisible(true);
-            } else if(usapower < warpower) {
-                JDialog sieg = new JDialog();
-                sieg.setTitle("Sieg!");
-                sieg.setSize(550, 100);
-                sieg.setModal(true);
-                sieg.add(new JLabel("Der Krieg gegen die USA wurde gewonnen!"));
-                sieg.add(new JLabel("Dir werden als Kriegsvergütung 100 Soldaten, 10 Offiziere und $2500000 gutgeschrieben."));
-                pps = pps + 3.5;
-                soldaten = soldaten + 100;
-                offiziere = offiziere + 10;
-                clicksAm = clicksAm + 2500000;
-                soldatenlabel.setText("Soldaten: " + String.valueOf(soldaten) + "  ");
-                offizierlabel.setText("Offiziere: " + String.valueOf(offiziere) + "  ");
-                sieg.setVisible(true);
-            }
-        }
-        if(randomInt == 2){
-            if (ruspower > warpower){
-                JDialog niederlage = new JDialog();
-                niederlage.setTitle("Niederlage!");
-                niederlage.setSize(500, 100);
-                niederlage.setModal(true);
-                niederlage.add(new JLabel("Der Krieg gegen die Russen wurde verloren. Dir werden alle Soldaten abgezogen."));
-                pps = pps - (soldaten * 0.025);
-                soldaten = 0;
-                soldatenlabel.setText("Soldaten: " + String.valueOf(soldaten) + "  ");
-                niederlage.setVisible(true);
-            } else if(ruspower < warpower) {
-                JDialog sieg = new JDialog();
-                sieg.setTitle("Sieg!");
-                sieg.setSize(550, 100);
-                sieg.setModal(true);
-                sieg.add(new JLabel("Der Krieg gegen die Russen wurde gewonnen!"));
-                sieg.add(new JLabel("Dir werden als Kriegsvergütung 115 Soldaten, 12 Offiziere und $3000000 gutgeschrieben."));
-                pps = pps + 4.075;
-                soldaten = soldaten + 115;
-                offiziere = offiziere + 12;
-                clicksAm = clicksAm + 3000000;
-                soldatenlabel.setText("Soldaten: " + String.valueOf(soldaten) + "  ");
-                offizierlabel.setText("Offiziere: " + String.valueOf(offiziere) + "  ");
-                sieg.setVisible(true);
-            }
-        }
-        if(randomInt == 3){
-            if (polenpower > warpower){
-                JDialog niederlage = new JDialog();
-                niederlage.setTitle("Niederlage!");
-                niederlage.setSize(500, 100);
-                niederlage.setModal(true);
-                niederlage.add(new JLabel("Der Krieg gegen die Polen wurde verloren. Dir werden alle Soldaten abgezogen."));
-                pps = pps - (soldaten * 0.025);
-                soldaten = 0;
-                soldatenlabel.setText("Soldaten: " + String.valueOf(soldaten) + "  ");
-                niederlage.setVisible(true);
-            } else if(polenpower < warpower) {
-                JDialog sieg = new JDialog();
-                sieg.setTitle("Sieg!");
-                sieg.setSize(550, 100);
-                sieg.setModal(true);
-                sieg.add(new JLabel("Der Krieg gegen die Polen wurde gewonnen!"));
-                sieg.add(new JLabel("Dir werden als Kriegsvergütung 75 Soldaten, 6 Offiziere und $1500000 gutgeschrieben."));
-                pps = pps + 2.475;
-                soldaten = soldaten + 75;
-                offiziere = offiziere + 6;
-                clicksAm = clicksAm + 1500000;
-                soldatenlabel.setText("Soldaten: " + String.valueOf(soldaten) + "  ");
-                offizierlabel.setText("Offiziere: " + String.valueOf(offiziere) + "  ");
-                sieg.setVisible(true);
-            }
-        }
-        if(randomInt == 4){
-            if (frankreichpower > warpower){
-                JDialog niederlage = new JDialog();
-                niederlage.setTitle("Niederlage!");
-                niederlage.setSize(500, 100);
-                niederlage.setModal(true);
-                niederlage.add(new JLabel("Der Krieg gegen die Franzosen wurde verloren. Dir werden alle Soldaten abgezogen."));
-                pps = pps - (soldaten * 0.025);
-                soldaten = 0;
-                soldatenlabel.setText("Soldaten: " + String.valueOf(soldaten) + "  ");
-                niederlage.setVisible(true);
-            } else if(frankreichpower < warpower) {
-                JDialog sieg = new JDialog();
-                sieg.setTitle("Sieg!");
-                sieg.setSize(550, 100);
-                sieg.setModal(true);
-                sieg.add(new JLabel("Der Krieg gegen die Franzosen wurde gewonnen!"));
-                sieg.add(new JLabel("Dir werden als Kriegsvergütung 5 Soldaten, 1 Offiziere und $250000 gutgeschrieben."));
-                pps = pps + 0.225;
-                soldaten = soldaten + 5;
-                offiziere = offiziere + 1;
-                clicksAm = clicksAm + 250000;
-                soldatenlabel.setText("Soldaten: " + String.valueOf(soldaten) + "  ");
-                offizierlabel.setText("Offiziere: " + String.valueOf(offiziere) + "  ");
-                sieg.setVisible(true);
-            }
-        }
-        if(randomInt == 5){
-            if (turkenpower > warpower){
-                JDialog niederlage = new JDialog();
-                niederlage.setTitle("Niederlage!");
-                niederlage.setSize(500, 100);
-                niederlage.setModal(true);
-                niederlage.add(new JLabel("Der Krieg gegen die Türken wurde verloren. Dir werden alle Soldaten abgezogen."));
-                pps = pps - (soldaten * 0.025);
-                soldaten = 0;
-                soldatenlabel.setText("Soldaten: " + String.valueOf(soldaten) + "  ");
-                niederlage.setVisible(true);
-            } else if(turkenpower < warpower) {
-                JDialog sieg = new JDialog();
-                sieg.setTitle("Sieg!");
-                sieg.setSize(550, 100);
-                sieg.setModal(true);
-                sieg.add(new JLabel("Der Krieg gegen die Türken wurde gewonnen!"));
-                sieg.add(new JLabel("Dir werden als Kriegsvergütung 90 Soldaten, 6 Offiziere und $2000000 gutgeschrieben."));
-                pps = pps + 2.85;
-                soldaten = soldaten + 90;
-                offiziere = offiziere + 6;
-                clicksAm = clicksAm + 2000000;
-                soldatenlabel.setText("Soldaten: " + String.valueOf(soldaten) + "  ");
-                offizierlabel.setText("Offiziere: " + String.valueOf(offiziere) + "  ");
-                sieg.setVisible(true);
-            }
-        }
-        if(randomInt == 6){
-            if (nordkoreapower > warpower){
-                JDialog niederlage = new JDialog();
-                niederlage.setTitle("Niederlage!");
-                niederlage.setSize(500, 100);
-                niederlage.setModal(true);
-                niederlage.add(new JLabel("Der Krieg gegen die Nordkorea wurde verloren. Dir werden alle Soldaten abgezogen."));
-                pps = pps - (soldaten * 0.025);
-                soldaten = 0;
-                soldatenlabel.setText("Soldaten: " + String.valueOf(soldaten) + "  ");
-                niederlage.setVisible(true);
-            } else if(nordkoreapower < warpower) {
-                JDialog sieg = new JDialog();
-                sieg.setTitle("Sieg!");
-                sieg.setSize(550, 100);
-                sieg.setModal(true);
-                sieg.add(new JLabel("Der Krieg gegen die Nordkorea wurde gewonnen!"));
-                sieg.add(new JLabel("Dir werden als Kriegsvergütung 80 Soldaten, 5 Offiziere und $1800000 gutgeschrieben."));
-                pps = pps + 2.5;
-                soldaten = soldaten + 80;
-                offiziere = offiziere + 5;
-                clicksAm = clicksAm + 1800000;
-                soldatenlabel.setText("Soldaten: " + String.valueOf(soldaten) + "  ");
-                offizierlabel.setText("Offiziere: " + String.valueOf(offiziere) + "  ");
-                sieg.setVisible(true);
-            }
-        }   
-    }
-
-    public void neuerangriff(){
-        JFrame Z = new JFrame();
-        Z.setTitle("In den Krieg ziehen");
-        Z.setSize(800,600);
-        kriego = new JPanel();
-        Z.add(kriego);
-        String[] objektwahl = {"Soldaten", "Panzer", "Panzerwagen", "Fregatte H.", "P-3C" };
-        JComboBox angriffauswahl = new JComboBox(objektwahl);
-        angriffauswahl.setSelectedItem(Soldat);
-        Object obj = angriffauswahl.getSelectedItem();
-        mengeEingeben = new JTextField(15);
-        kriego.add(angriffauswahl);
-        kriego.add(mengeEingeben);
-        kriego.add(ok);
-        kriego.add(Testlabel);
-        kriego.setVisible(true);
-        Z.setVisible(true);
-    }
+    
 
     public void ladeDatei(){ 
         FileInputStream fis = null;
@@ -1360,7 +1434,14 @@ public class truppenklicker extends JFrame implements ActionListener{
                 dienstgradpunkte = Double.parseDouble(line);
                 line = reader.readLine();
                 dienstgrad = Double.parseDouble(line);
-                clicks.setText("$: " + BigDecimal.valueOf(clicksAm).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");
+                clicks.setText("$: " + BigDecimal.valueOf(clicksAm).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");   
+                if (clicksAm > 1000 && clicksAm < 1000000) {
+                    clicks.setText("$: " + BigDecimal.valueOf(clicksAm / 1000).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "k" + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");   
+                }else if (clicksAm > 1000000 && clicksAm < 1000000000) {
+                    clicks.setText("$: " + BigDecimal.valueOf(clicksAm / 1000000).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "mio" + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");   
+                }else if (clicksAm > 1000000000) {
+                    clicks.setText("$: " + BigDecimal.valueOf(clicksAm / 1000000000).setScale(yourScale, BigDecimal.ROUND_HALF_DOWN) + "mrd" + "  " + "[$ pro Sekunde: " + BigDecimal.valueOf(pps).setScale(ppsScale, BigDecimal.ROUND_HALF_DOWN) + "]  ");   
+                }
                 soldatenlabel.setText("Soldaten: " + String.valueOf(soldaten) + "  ");
                 G36Clabel.setText("G36C: " + String.valueOf(g36s) + "  ");
                 offizierlabel.setText("Offiziere: " + String.valueOf(offiziere) + "  ");
