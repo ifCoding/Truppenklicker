@@ -28,6 +28,7 @@ public class truppenklicker extends JFrame implements ActionListener{
     
     JFrame X = new JFrame();
     JFrame Z = new JFrame();
+    JFrame F = new JFrame();
 
     double wehrsoldset = 0;
     double clicksAm = 0;
@@ -60,6 +61,7 @@ public class truppenklicker extends JFrame implements ActionListener{
     double wehrsold = 1;
     Object ausgewahlt;
     String soldatenDisplay = String.valueOf(g36s);
+    String panzerDisplay = String.valueOf(soldaten);
     double mengedouble = 0;
     double g36imeinsatz = 0;
 
@@ -118,6 +120,8 @@ public class truppenklicker extends JFrame implements ActionListener{
     JButton ok;
     JButton SoldatenJa;
     JButton SoldatenNein;
+    JButton SoldatenSchutzJa;
+    JButton SoldatenSchutzNein;
 
     JButton soldatenB;
     JButton Offizier;
@@ -142,10 +146,14 @@ public class truppenklicker extends JFrame implements ActionListener{
     JComboBox angriffauswahl = new JComboBox(objektwahl);
     
     boolean SoldatenG36 = false;
+    boolean SoldatenSonderSchutz = false;
     
     JPanel XPanel = new JPanel();
         JPanel XPanel2 = new JPanel();
         JLabel XLabel1 = new JLabel();
+        JPanel FPanel = new JPanel();
+        JPanel FPanel2 = new JPanel();
+        JLabel FLabel1 = new JLabel();
 
     public truppenklicker()
     {
@@ -252,6 +260,14 @@ public class truppenklicker extends JFrame implements ActionListener{
         SoldatenNein = new JButton("Nein");
         SoldatenNein.setVisible(true);
         SoldatenNein.setPreferredSize(new Dimension(80, 30));
+        
+        SoldatenSchutzJa = new JButton("Ja");
+        SoldatenSchutzJa.setVisible(true);
+        SoldatenSchutzJa.setPreferredSize(new Dimension(80, 30));
+        
+        SoldatenSchutzNein = new JButton("Nein");
+        SoldatenSchutzNein.setVisible(true);
+        SoldatenSchutzNein.setPreferredSize(new Dimension(80, 30));
 
         Offizier = new JButton("Offizier");
         Offizier.setVisible(true);
@@ -422,6 +438,8 @@ public class truppenklicker extends JFrame implements ActionListener{
         menuItem15.addActionListener(this);
         SoldatenJa.addActionListener(this);
         SoldatenNein.addActionListener(this);
+        SoldatenSchutzJa.addActionListener(this);
+        SoldatenSchutzNein.addActionListener(this);
         this.add(outer);
 
         nested.add(clicks);
@@ -959,6 +977,14 @@ public class truppenklicker extends JFrame implements ActionListener{
             SoldatenSonderschutz();
             Z.dispose();
         }
+        if(ae.getSource() == this.SoldatenNein){
+            SoldatenSonderschutz();
+            Z.dispose();
+        }
+        if(ae.getSource() == this.SoldatenSchutzJa){
+            SoldatenSonderSchutz = true;
+            X.dispose();
+        }
 
         if (ae.getSource() == this.ok) {
             String menge = null;
@@ -976,7 +1002,11 @@ public class truppenklicker extends JFrame implements ActionListener{
                     Testlabel.setText("Zu wenig Soldaten");
                 }
             }else if(ausgewahlt.equals(Panzerobj)){
-                Testlabel.setText("Es ist was anderes");
+                if(mengedouble == panzerd || mengedouble < panzerd){
+                    PanzerAuswahlKrieg();
+                }else if(mengedouble > panzerd){
+                    Testlabel.setText("Zu wenig Panzer");
+                }
             }else if(ausgewahlt.equals(Panzerwagenobj)){
                 Testlabel.setText("Pzw");
             }else if(ausgewahlt.equals(Fregatteobj)){
@@ -1316,6 +1346,28 @@ public class truppenklicker extends JFrame implements ActionListener{
         XLabel1.setVisible(true);
     }
     
+    public void PanzerAuswahlKrieg(){
+        
+        if(mengedouble > soldaten){
+            panzerDisplay = String.valueOf(soldaten);
+        }else if(mengedouble < soldaten || mengedouble == soldaten){
+            panzerDisplay = String.valueOf(mengedouble);
+        }
+        
+        F.setTitle("Soldaten ausstatten");
+        F.setSize(800,600);
+        FLabel1.setText("Wollen sie ihre Panzer mit Soldaten ausstatten? Sie besitzen " + soldaten + " Soldaten und können damit " + panzerDisplay + " Panzer ausstatten.");
+        FPanel.add(FLabel1);
+        FPanel2.add(SoldatenJa);
+        FPanel2.add(SoldatenNein);
+        F.add(FPanel, BorderLayout.PAGE_START);
+        F.add(FPanel2, BorderLayout.CENTER);
+        F.setVisible(true);
+        FPanel.setVisible(true);
+        FPanel2.setVisible(true);
+        FLabel1.setVisible(true);
+    }
+    
     public void SoldatenSonderschutz(){
         X.setVisible(false);
         XPanel.setVisible(false);
@@ -1325,8 +1377,10 @@ public class truppenklicker extends JFrame implements ActionListener{
         X.setSize(800,600);
         XLabel1.setText("Wollen sie " + soldatenDisplay + " Soldaten mit Schutzwesten, Helmen und Schutzschuhen ausstatten? Dies kostet sie " + (mengedouble * 100) + "$");
         XPanel.add(XLabel1);
-        XPanel2.add(SoldatenJa);
-        XPanel2.add(SoldatenNein);
+        XPanel2.remove(SoldatenJa);
+        XPanel2.remove(SoldatenNein);
+        XPanel2.add(SoldatenSchutzJa);
+        XPanel2.add(SoldatenSchutzNein);
         X.add(XPanel, BorderLayout.PAGE_START);
         X.add(XPanel2, BorderLayout.CENTER);
         X.setVisible(true);
