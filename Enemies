@@ -1,0 +1,38 @@
+import javax.swing.*;
+import java.awt.*;
+
+public class doWar
+{
+
+    String[][] Enemies = {{"AUT" /** Österreich */,
+                           "UAE" /** Vereinigte Arabische Emirate */,
+                           "NED" /** Niederlande */,
+                           "SUI" /** Schweiz */,
+                           "LUX" /** Luxemburg */,
+                           "CZE" /** Tschechien */,
+                           "DEN" /** Dänemark */,
+                           "FIN" /** Finnland */,
+                           "RSA" /** Südafrika */
+                         },
+                         
+                          {"IRN" /** Iran */,
+                           "ISR" /** Israel */,
+                           "KSA" /** Saudi-Arabien */,
+                           "RUS" /** Russland */,
+                           "USA" /** Südafrika */,
+                           "GER" /** Deutschland */,
+                           "EGY" /** Ägypten */,
+                           "JPN" /** Japan */,
+                           "CHN" /** China */,
+                           ""}};
+    
+    public doWar()
+    {
+        
+    }
+
+    public void startWar()
+    {
+    
+    }
+}
